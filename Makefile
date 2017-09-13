@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 .PHONY: clean fclean re
-	vpath %.c srcs/
-	export $(DEBUG)
+vpath %.c srcs/
+export $(DEBUG)
 
 CC= gcc-7 
 DEBUG=no
@@ -31,6 +31,7 @@ INCLUDE= includes/
 vpath %.h $(INCLUDE)
 HEADERS= ft_select.h
 SRCS= main.c
+
 #SRCDIR= srcs
 
 OBJ= $(SRCS:%.c=%.o)
@@ -40,23 +41,13 @@ LIB= libft.a
 LIBDIR= libft/
 
 NAME=ft_select
-
 all: $(LIB) $(NAME)
 
 $(NAME): $(addprefix $(OBJDIR)/, $(OBJ)) $(LIBDIR)$(LIB)
 	$(CC) $(CFLAGS) -o $(NAME) $(addprefix $(OBJDIR)/, $(OBJ)) -L$(LIBDIR) -lft -ltermcap
 
-#MAC + LINUX Compilation
-#ifeq ($(ARCH), Darwin)
 $(OBJDIR)/%.o: %.c $(HEADERS) | $(OBJDIR)
 	$(COMPILE.c) $< -o $@
-
-#else ifeq ($(ARCH), Linux)
-$(addprefix $(OBJDIR)/, $(OBJ)): $(addprefix srcs/, $(SRCS)) $(HEADERS) | $(OBJDIR)
-	$(COMPILE.c) $< -o $@
-#else
-
-#endif
 
 $(OBJDIR):
 	-mkdir -p $@
