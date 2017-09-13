@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/09/13 15:18:16 by lportay          ###   ########.fr        #
+#    Updated: 2017/09/13 15:52:10 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,6 @@ vpath %.h $(INCLUDE)
 HEADERS= ft_select.h
 SRCS= main.c
 
-#SRCDIR= srcs
-
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj
 
@@ -53,7 +51,7 @@ $(OBJDIR):
 	-mkdir -p $@
 
 $(LIB): 
-	$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -C $(LIBDIR)
 
 main: $(LIB)
 	$(CC) $(CFLAGS) -c $(main)
