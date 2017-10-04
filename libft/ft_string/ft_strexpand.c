@@ -24,9 +24,9 @@ char	*ft_strexpand(char *str, char c, char *expr)
 	char		*new_str;
 	long int	diff;
 
-	if ((tmp = ft_strchr(str, c)) == NULL || !str || !expr || ft_isprint(c) == 0
+	if (!str || !expr || ft_isprint(c) == 0 || (tmp = ft_strchr(str, c)) == NULL
 		|| (new_str = ft_strnew(ft_strlen(str) + ft_strlen(expr) - 1)) == NULL)
-		return (NULL);
+		return (str);
 	diff = tmp - str;
 	ft_strncpy(new_str, str, diff);
 	ft_strcpy(new_str + diff, expr);

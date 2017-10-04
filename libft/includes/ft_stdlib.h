@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 16:49:08 by lportay           #+#    #+#             */
-/*   Updated: 2017/08/24 21:55:18 by lportay          ###   ########.fr       */
+/*   Updated: 2017/09/26 11:17:20 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		abs(int x);
 int		ft_atoi(const char *str);
 int		ft_atoi_base(char *str, int base);
-char	*ft_itoa(int n);
+char	*ft_itoa(long n);
 char	*ft_itoa_base(long value, int base);
 char	*ft_itoa_base_u(unsigned long value, unsigned int base);
 void	ft_swap(int *n, int *m);

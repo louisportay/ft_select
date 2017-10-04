@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/08/24 21:19:33 by lportay          ###   ########.fr        #
+#    Updated: 2017/09/26 17:24:42 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ STDLIB=	ft_bwidth.c\
 STDIO=	get_next_line.c\
 	ft_putchar.c\
 	ft_putstr.c\
+	ft_putnbr.c\
 	ft_putendl.c\
 	ft_getchar.c
 LST=	ft_lstadd.c\
@@ -112,7 +113,8 @@ LST=	ft_lstadd.c\
 	ft_lstmove.c\
 	ft_lstinsert.c\
 	ft_lstiter.c\
-	ft_lstmap.c
+	ft_lstmap.c\
+	ft_tabtolst.c
 DLST=   ft_dlstadd.c\
 	ft_dlstaddend.c\
 	ft_dlstprint.c\

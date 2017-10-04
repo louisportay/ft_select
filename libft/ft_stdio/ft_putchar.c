@@ -6,13 +6,14 @@
 /*   By: lportay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 11:31:26 by lportay           #+#    #+#             */
-/*   Updated: 2017/03/16 21:56:33 by lportay          ###   ########.fr       */
+/*   Updated: 2017/09/29 18:40:11 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar(char c)
+int	ft_putchar(int c)
 {
-	write(1, &c, 1);
+	write(STDOUT_FILENO, &c, 1);
+	return (c);
 }

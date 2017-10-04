@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 15:07:07 by lportay           #+#    #+#             */
-/*   Updated: 2017/09/13 13:55:54 by lportay          ###   ########.fr       */
+/*   Updated: 2017/09/29 18:59:49 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 # include <wchar.h>
 # include <stdarg.h>
 # include <stdbool.h>
-
-#ifdef __linux__
-# include <stdint.h>
-#endif
+# ifdef __linux__
+#  include <stdint.h>
+# endif
 
 # define THREE_BITS 7
 # define FOUR_BITS 15

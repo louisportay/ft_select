@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 21:53:15 by lportay           #+#    #+#             */
-/*   Updated: 2017/08/24 21:53:18 by lportay          ###   ########.fr       */
+/*   Updated: 2017/09/26 16:26:52 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct		s_dlist
 	struct s_dlist	*next;
 }					t_dlist;
 
-t_dlist				*ft_dlstempty(void);
 t_dlist				*ft_dlstnew(void const *content, size_t content_size);
 void				ft_dlstadd(t_dlist **alst, t_dlist *new);
 void				ft_dlstaddend(t_dlist **alst, t_dlist *new);

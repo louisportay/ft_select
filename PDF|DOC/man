@@ -1,0 +1,12 @@
+man termcap 3ncurses
+man 5 termcap
+man 3 termios
+man 4 termios
+
+man 2 signal
+man 7 signal
+
+BONUS
+
+man termio
+man terminfo

@@ -3,60 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lportay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/28 10:50:13 by lportay           #+#    #+#             */
-/*   Updated: 2017/08/23 17:56:13 by lportay          ###   ########.fr       */
+/*   Created: 2017/09/21 11:24:47 by lportay           #+#    #+#             */
+/*   Updated: 2017/09/27 10:44:33 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_strjoin_gnl(char **rest, char **buf)
+static void	join_gnl(char **rest, char *buf)
 {
-	char *buf_free;
+	char *old_rest_to_free;
 
-	if (!(*rest) && *buf)
-		*rest = ft_strdup(*buf);
+	if (!(*rest))
+		*rest = ft_strdup(buf);
 	else
 	{
-		buf_free = *rest;
-		*rest = ft_strjoin(*rest, *buf);
-		ft_strdel(&buf_free);
+		old_rest_to_free = *rest;
+		*rest = ft_strjoin(*rest, buf);
+		ft_strdel(&old_rest_to_free);
 	}
 }
 
-static int	find_nl(char **buf, char **rest, int fd, char **nl)
+static int	find_nl(char *buf, char **rest, char **nl_ptr, int fd)
 {
-	int	ret;
+	int ret;
 
-	*buf = ft_strnew(BUFF_SIZE + 1);
-	if ((ret = read(fd, *buf, BUFF_SIZE)) == -1)
-		return (-1);
-	while (!(*nl = ft_strchr(*buf, '\n')))
+	ft_bzero(buf, BUFF_SIZE + 1);
+	if ((ret = read(fd, buf, BUFF_SIZE)) == -1)
+		return (ret);
+	while (!(*nl_ptr = ft_strchr(buf, '\n')))
 	{
 		if (ret == 0)
-		{
-			ft_strdel(buf);
 			return ((!(*rest) || ft_strlen(*rest) == 0) ? 0 : 1);
-		}
-		ft_strjoin_gnl(rest, buf);
-		ft_bzero(*buf, BUFF_SIZE);
-		ret = read(fd, *buf, BUFF_SIZE);
+		join_gnl(rest, buf);
+		ft_bzero(buf, BUFF_SIZE);
+		if ((ret = read(fd, buf, BUFF_SIZE)) == -1)
+			return (ret);
 	}
 	return (2);
 }
 
-static void	ft_pansement(char **buf, char **rest, char **line, char **nl)
+static void	gnl_end(char *buf, char **rest, char **line, char **nl_ptr)
 {
-	*buf[nl - buf] = '\0';
-	ft_strjoin_gnl(rest, buf);
-	*line = (!(*rest)) ? NULL : ft_strdup(*rest);
-	ft_strdel(rest);
-	*rest = ft_strdup(*nl + 1);
-	if (ft_strlen(*rest) == 0)
+	**nl_ptr = '\0';
+	join_gnl(rest, buf);
+	*line = *rest;
+	*rest = ft_strdup(*nl_ptr + 1);
+	if (rest && (ft_strlen(*rest) == 0))
 		ft_strdel(rest);
-	ft_strdel(buf);
 }
 
 /*
@@ -67,29 +63,28 @@ static void	ft_pansement(char **buf, char **rest, char **line, char **nl)
 
 int			get_next_line(const int fd, char **line)
 {
-	char		*buf;
-	int			ret;
 	static char	*rest = NULL;
-	char		*nl;
+	char		*nl_ptr;
+	char		buf[BUFF_SIZE + 1];
+	int			ret;
 
 	if (BUFF_SIZE <= 0 || fd < 0)
 		return (-1);
-	if (rest != NULL && (nl = ft_strchr(rest, '\n')) != NULL)
+	if (rest != NULL && (nl_ptr = ft_strchr(rest, '\n')) != NULL)
 	{
-		rest[nl - rest] = '\0';
-		*line = ft_strdup(rest);
-		free(rest);
-		rest = ft_strdup(nl + 1);
+		*nl_ptr = '\0';
+		*line = rest;
+		rest = ft_strdup(nl_ptr + 1);
 		return (1);
 	}
-	if ((ret = find_nl(&buf, &rest, fd, &nl)) == -1 || ret == 0 || ret == 1)
+	if ((ret = find_nl(buf, &rest, &nl_ptr, fd)) == -1 || ret == 0 || ret == 1)
 	{
 		if (ret == -1)
 			return (ret);
-		*line = (!rest) ? NULL : ft_strdup(rest);
-		ft_strdel(&rest);
+		*line = rest;
+		rest = NULL;
 		return (ret);
 	}
-	ft_pansement(&buf, &rest, line, &nl);
+	gnl_end(buf, &rest, line, &nl_ptr);
 	return (1);
 }
