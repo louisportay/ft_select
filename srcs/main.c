@@ -6,13 +6,13 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 11:33:53 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/04 17:43:40 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 22:53:51 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	return (ft_select(ac, av));
+	ft_select(ac, av);
 }

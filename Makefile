@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/09 19:53:03 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/09 23:32:55 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,17 @@ endif
 INCLUDE= includes/
 vpath %.h $(INCLUDE)
 HEADERS= ft_select.h
-SRCS= main.c ft_select.c tools.c signal.c files.c termcaps.c print.c window.c#user_input.c
+
+SRCS= main.c\
+      ft_select.c\
+      tools.c\
+      signal.c\
+      files.c\
+      termcaps.c\
+      print.c\
+      window.c\
+      user_input.c\
+      arrowkey.c
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj

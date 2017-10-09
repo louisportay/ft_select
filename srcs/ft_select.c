@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 19:21:24 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 22:53:24 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,22 @@ int init(t_select *env, int ac, char **av)
 	return (SUCCESS);
 }
 
-int	ft_select(int ac, char **av)
+void	ft_select(int ac, char **av)
 {
 	t_select	env;
 	int 		ret;
-//	char		buf[4];
+	char		buf[4];
 
 	if ((ret = init(&env, ac, av)) != SUCCESS)
 		fatal_err(ret);
-
-//	wrap_sigaction();
-//	hardexit(0, &env);
-
-//	while (1)
-//	{
-//	clear the screen ?
-
-//		read(STDIN_FILENO, buf, 4);
-//	print the selection
-		print_files(&env);
-//		get thw new screen size
-//	}
-	restore(&env);
-	return (0);
+	hardexit(0, &env);
+	wrap_sigaction();
+	while (1)
+	{
+		tputs(tgetstr("cl", NULL), 1, ft_putchar);
+		ft_bzero(buf, 4);
+		read(STDIN_FILENO, buf, 4);
+		user_input(buf);
+//		print_files(&env);
+	}
 }

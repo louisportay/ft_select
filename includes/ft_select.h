@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 19:54:04 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 23:32:15 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** NEVER SET THIS VALUE TO 0 (unless you want to get a FPE...)
 */
 
-# define MCW 8 
+# define MCW 8
 
 /*
 ** Characters and escape sequences
@@ -62,8 +62,8 @@ enum	e_errcode
 typedef struct		s_file
 {
 	char		*filename;
-//	int		select;
-//	int		cursor;	
+//	char		select : 1;
+//	char		cursor : 1;
 }			t_file;
 
 /*
@@ -90,7 +90,7 @@ typedef struct		s_select
 	unsigned char	min_lines;
 }			t_select;
 
-int	ft_select(int ac, char **av);
+void	ft_select(int ac, char **av);
 
 void	fatal_err(int errcode);
 
@@ -105,6 +105,12 @@ void	fill_lst(t_list **files, char **av);
 
 void	print_files(t_select *env);
 void	refresh_window(t_select *env);
+
+void	user_input(char *buf);
+void	uparrowkey(void);
+void	downarrowkey(void);
+void	leftarrowkey(void);
+void	rightarrowkey(void);
 
 void	cursor_mode(bool val);
 

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 19:56:07 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 22:09:21 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static int	min_lines(int n_files, int fbl)
 {
 	return ((n_files % fbl) == 0 ? (n_files / fbl) : (n_files / fbl) + 1);
 }
+
+/*
+** Get the new parameters for winsize and the printing of files
+*/
 
 void	refresh_window(t_select *env)
 {

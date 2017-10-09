@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 14:36:10 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/06 14:39:49 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 22:07:36 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ t_file	*new_file(char *filename)
 	new->filename = ft_strdup(filename);
 	return (new);
 }
+
+/*
+** Function  to pass to lstdel to delete a file in the list
+*/
 
 void	destroy_file(void *content, size_t content_size)
 {

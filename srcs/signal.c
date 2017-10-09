@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 18:25:18 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 17:16:15 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 22:05:49 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ void	hardexit(int signum, t_select *env)
 	{
 		envaddr = env;
 		return ; 
-	}
-	
-// restore the terminal and free your stuff... Bleah bleah
-
+	}	
 	restore(envaddr);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGSEGV, SIG_DFL);
+	signal(signum, SIG_DFL);
 	raise(signum);
 }
 
@@ -40,21 +36,33 @@ void	restore(t_select *env)
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &env->oldtios);
 }
 
+/*
+** Finish a proper handler
+*/
+
 void	sighandler(int signum, siginfo_t *siginfo, void *context)
 {
-(void)signum;
-(void)siginfo;
-(void)context;
+	(void)siginfo;
+	(void)context;
 
-	if (signum == SIGSEGV || signum == SIGINT)
-		hardexit(signum, NULL);		
+	if (signum == SIGINT)
+		hardexit(signum, NULL);
+	if (ft_iserror(signum))
+		hardexit(signum, NULL);
 }
+
+/*
+** delete sigemptyset
+** winch handler
+** cont handler
+*/
 
 void	wrap_sigaction(void)
 {
 	struct sigaction sa;
 
 	sa.sa_sigaction = &sighandler;
+	sigemptyset(&sa.sa_mask);//
 	sa.sa_flags = SA_SIGINFO;
 
 	sigaction(SIGINT, &sa, NULL);
@@ -74,4 +82,3 @@ void	wrap_sigaction(void)
 	sigaction(SIGBUS, &sa, NULL);
 	sigaction(SIGSEGV, &sa, NULL);
 }
-

@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_iserror.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/16 19:21:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 21:40:55 by lportay          ###   ########.fr       */
+/*   Created: 2017/10/09 21:36:39 by lportay           #+#    #+#             */
+/*   Updated: 2017/10/09 21:38:14 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <signal.h>
-# define BUFF_SIZE 512
-# include "ft_stdio.h"
-# include "ft_stdlib.h"
-# include "ft_string.h"
-# include "ft_ctype.h"
-# include "ft_wchar.h"
-# include "buffer.h"
-# include "ft_dlst.h"
-# include "ft_lst.h"
-# include "other.h"
-# include "ft_hash.h"
-# include "ft_btree.h"
-
-#endif
+int	ft_iserror(int signum)
+{
+	if (signum == SIGILL ||signum == SIGTRAP ||signum == SIGABRT || signum
+		== SIGFPE || signum == SIGBUS || signum == SIGSEGV)
+		return (1);
+	return (0);
+}

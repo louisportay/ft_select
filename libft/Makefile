@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/04 20:47:51 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/09 21:40:24 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ CTYPE=	ft_isprint.c\
 	ft_isunicode.c\
 	ft_tolower.c\
 	ft_toupper.c\
-	ft_isspace.c
+	ft_isspace.c\
+	ft_iserror.c
 STRING=	ft_bzero.c\
 	ft_memcpy.c\
 	ft_memdel.c\
