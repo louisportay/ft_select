@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/09/13 15:52:10 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/09 19:53:03 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ vpath %.c srcs/
 export $(DEBUG)
 
 CC= gcc-7 
-DEBUG=no
+DEBUG=sanitize
 OPT=LIB
 ARCH= $(shell uname)
 
@@ -30,7 +30,7 @@ endif
 INCLUDE= includes/
 vpath %.h $(INCLUDE)
 HEADERS= ft_select.h
-SRCS= main.c
+SRCS= main.c ft_select.c tools.c signal.c files.c termcaps.c print.c window.c#user_input.c
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj
@@ -54,8 +54,7 @@ $(LIB):
 	@$(MAKE) -C $(LIBDIR)
 
 main: $(LIB)
-	$(CC) $(CFLAGS) -c $(main)
-	$(CC) $(CFLAGS) -o test -L$(LIBDIR) -lft -ltermcap $(main)
+	$(CC) $(CFLAGS) -o test $(main) -L$(LIBDIR) -lft -ltermcap
 	-rm -f $(main:.c=.o)
 
 clean:

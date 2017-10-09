@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/09/26 17:24:42 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/04 20:47:51 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,8 @@ LST=	ft_lstadd.c\
 	ft_lstinsert.c\
 	ft_lstiter.c\
 	ft_lstmap.c\
-	ft_tabtolst.c
+	ft_tabtolst.c\
+	ft_lstnewaddr.c
 DLST=   ft_dlstadd.c\
 	ft_dlstaddend.c\
 	ft_dlstprint.c\

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/04 16:13:42 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 17:23:48 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	dump_err(int errcode)
 		ft_putstr(NOWINDOW_STR);
 }
 
+/*
+** Print the error message and exit
+*/
 void	fatal_err(int errcode)
 {
 	dump_err(errcode);

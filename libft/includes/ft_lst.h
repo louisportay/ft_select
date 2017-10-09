@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 16:52:21 by lportay           #+#    #+#             */
-/*   Updated: 2017/09/26 17:24:15 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/04 20:51:31 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ t_list			*ft_lst_at(t_list *lst, size_t n);
 t_list			*ft_lstend(t_list *lst);
 void			ft_lstmerge(t_list *lst1, t_list *lst2);
 t_list			*ft_tabtolst(char **tab);
+t_list			*ft_lstnewaddr(void const *content, size_t content_size);
 
 #endif

@@ -6,57 +6,15 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/04 17:43:49 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/09 19:21:24 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-/*
-int	longest_arg(char **av)
-{
-	int len;
-	int col_w;
-
-	col_w = MCW;
-	while (*av != NULL)
-	{
-		len = ft_strlen(*av++);
-		if (len > col_w)
-		{
-			if ((len % MCW) != 0)
-				col_w = ((len / MCW) * MCW)  + MCW;
-			else
-				col_w = len;
-		}
-	}
-	return (col_w);
-}
-
-void	epurlst(t_list **lst)
-{
-	t_list *tmp;
-
-	tmp = *lst;
-	while (tmp)
-	{
-		if (tmp->content == NULL || tmp->content_size == 0)
-		{
-			tmp = tmp->next;
-			ft_lstremove(lst, ft_lstindex(*lst, tmp) - 1, ft_delvoid);
-		}	
-		else
-			tmp = tmp->next;
-	}
-}
-*/
-
-
 int init(t_select *env, int ac, char **av)
 {
 	char *tmp;
-
-(void)av;
 
 	if (ac < 2)
 		return (NOINPUT);
@@ -71,35 +29,38 @@ int init(t_select *env, int ac, char **av)
 		return (NOATTR);
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &env->ws) == -1)
 		return (NOWINDOW);
-/* convert and insert the files in env->files*/
-	return (0);
-}
 
-void	wrap_sigaction()
-{
-	struct sigaction sa;
+	env->tios.c_lflag &= ~(ICANON);
+	env->tios.c_lflag &= ~(ECHO);
+	env->tios.c_cc[VMIN] &= 1;
+	env->tios.c_cc[VTIME] &= 100; // test 0 ?
 
-	sa.sa_sigaction = &sighandler;
-	sa.sa_flags = SA_SIGINFO;
+	fill_lst(&env->files, ++av);	// increment av to remove "./ft_select from the arguments 
+
+	return (SUCCESS);
 }
 
 int	ft_select(int ac, char **av)
 {
 	t_select	env;
-	int ret;
+	int 		ret;
+//	char		buf[4];
 
 	if ((ret = init(&env, ac, av)) != SUCCESS)
 		fatal_err(ret);
-	wrap_sigaction();
-	return (0);
+
+//	wrap_sigaction();
+//	hardexit(0, &env);
+
 //	while (1)
 //	{
-//		
+//	clear the screen ?
+
+//		read(STDIN_FILENO, buf, 4);
+//	print the selection
+		print_files(&env);
+//		get thw new screen size
 //	}
-
-//	width = longest_arg(av + 1);
-//	lst_av = ft_tabtolst(av + 1);
-//	epurlst(&lst_av);
-
-//	ft_lstdel(&lst_av, ft_delvoid);
+	restore(&env);
+	return (0);
 }

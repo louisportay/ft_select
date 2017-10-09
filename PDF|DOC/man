@@ -10,3 +10,18 @@ BONUS
 
 man termio
 man terminfo
+
+
+TO HANDLE
+
+bg (comme un SIGCONT 19, 18, 25)
+gerer les backquotes (bonne sortie sur le STDIN_FILENO ou 1)
+
+envoyer une info dans le read (avec ioctl ?) qui dit de free et de exit
+
+flag ~ISIG pour transformer les signaux en caracteres
+
+La fonction qui imprime un caractere de tputs ecrit sur la sortie standard ou l'entree ?
+
+Gerer les fichiers avec un nom super long (>255 caracteres)
+Restore le terminal correctement apres une erreur
