@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/09 21:40:24 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/10 19:46:23 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,8 @@ CTYPE=	ft_isprint.c\
 	ft_isunicode.c\
 	ft_tolower.c\
 	ft_toupper.c\
-	ft_isspace.c\
-	ft_iserror.c
+	ft_isspace.c
+
 STRING=	ft_bzero.c\
 	ft_memcpy.c\
 	ft_memdel.c\
@@ -79,6 +79,7 @@ STRING=	ft_bzero.c\
 	ft_strstri.c\
 	ft_strsplitquote.c\
 	ft_strexpand.c
+
 STDLIB=	ft_bwidth.c\
 	ft_itoa.c\
 	ft_itoa_base.c\
@@ -96,12 +97,14 @@ STDLIB=	ft_bwidth.c\
 	ft_unsetenv.c\
 	ft_copyenv.c\
 	ft_delvoid.c
+
 STDIO=	get_next_line.c\
 	ft_putchar.c\
 	ft_putstr.c\
 	ft_putnbr.c\
 	ft_putendl.c\
 	ft_getchar.c
+
 LST=	ft_lstadd.c\
 	ft_lstaddend.c\
 	ft_lstprint.c\
@@ -117,6 +120,7 @@ LST=	ft_lstadd.c\
 	ft_lstmap.c\
 	ft_tabtolst.c\
 	ft_lstnewaddr.c
+
 DLST=   ft_dlstadd.c\
 	ft_dlstaddend.c\
 	ft_dlstprint.c\
@@ -129,6 +133,7 @@ DLST=   ft_dlstadd.c\
 	ft_dlstaddr.c\
 	ft_dlsthead.c\
 	ft_dlstend.c
+
 BUFFER= putc_in_buf.c\
 	putnbr_in_buf.c\
 	putnc_in_buf.c\
@@ -137,12 +142,15 @@ BUFFER= putc_in_buf.c\
 	puts_in_buf.c\
 	putwc_in_buf.c\
 	putws_in_buf.c
+
 WCHAR= 	ft_wcslen.c\
 	ft_wcstrdel.c\
 	ft_wcsdup.c
+
 OTHER=	fill_array.c\
 	fill_darray.c\
 	del_array.c
+
 PRINTF= ft_printf.c\
 	 parsing.c\
 	 flags.c\
@@ -153,6 +161,7 @@ PRINTF= ft_printf.c\
 	 int_unsigned.c\
 	 char_str.c\
 	 print_input.c
+
 HASH=	hashindex.c\
 	hashdel.c\
 	hashinsert.c\

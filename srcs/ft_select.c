@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 22:53:24 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/10 20:45:02 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	ft_select(int ac, char **av)
 
 	if ((ret = init(&env, ac, av)) != SUCCESS)
 		fatal_err(ret);
-	hardexit(0, &env);
-	wrap_sigaction();
+	sig_switch(0, &env);
+	wrap_signal();
+	select_term(&env);
 	while (1)
 	{
-		tputs(tgetstr("cl", NULL), 1, ft_putchar);
+		print_files(&env);
 		ft_bzero(buf, 4);
 		read(STDIN_FILENO, buf, 4);
-		user_input(buf);
-//		print_files(&env);
+		user_input(buf, &env);
 	}
 }

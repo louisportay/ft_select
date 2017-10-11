@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 23:32:15 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/10 20:43:16 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <sys/ioctl.h>
+# include <sys/types.h>
 # include <termios.h>
 # include <term.h>
 # include <curses.h>
@@ -31,9 +32,6 @@
 /*
 ** Characters and escape sequences
 */
-
-# define SPACE ' '
-# define ESC 27
 
 #define MINCOL env->min_col
 #define FBL env->filesbyline
@@ -94,10 +92,12 @@ void	ft_select(int ac, char **av);
 
 void	fatal_err(int errcode);
 
-void	hardexit(int signum, t_select *env);
-void	wrap_sigaction(void);
-void	sighandler(int signum, siginfo_t *siginfo, void *context);
-void	restore(t_select *env);
+void	sig_switch(int signum, t_select *env);
+void	wrap_signal(void);
+void	sighandler(int signum);
+
+void	restore_term(t_select *env, bool del);
+void	select_term(t_select *env);
 
 t_file	*new_file(char *filename);
 void	destroy_file(void *content, size_t content_size);
@@ -106,13 +106,11 @@ void	fill_lst(t_list **files, char **av);
 void	print_files(t_select *env);
 void	refresh_window(t_select *env);
 
-void	user_input(char *buf);
+void	user_input(char *buf, t_select *env);
+
 void	uparrowkey(void);
 void	downarrowkey(void);
 void	leftarrowkey(void);
 void	rightarrowkey(void);
-
-void	cursor_mode(bool val);
-
 
 #endif

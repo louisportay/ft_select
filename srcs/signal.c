@@ -6,79 +6,66 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 18:25:18 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 22:05:49 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 10:42:36 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void	hardexit(int signum, t_select *env)
+void	sig_switch(int signum, t_select *env)
 {
 	static t_select *envaddr = NULL;
 	
-	if (envaddr == NULL)
+	if (signum == SIGINT || signum == SIGQUIT || signum == SIGTERM ||
+	signum == SIGILL ||signum == SIGTRAP ||signum == SIGABRT || signum
+		== SIGFPE || signum == SIGBUS || signum == SIGSEGV)
+		restore_term(envaddr, true);
+	else if (signum == SIGWINCH)
 	{
-		envaddr = env;
-		return ; 
-	}	
-	restore(envaddr);
+		ioctl(STDIN_FILENO, TIOCGWINSZ, envaddr->ws);
+		print_files(envaddr);
+		return ;		// Default behaviour is not interesting here
+	}
+	else if (signum == SIGTSTP)	// faking SIGTSTP with a ioctl is crap, here's a real SIGTSTP handler
+	{
+		signal(SIGCONT, &sighandler); //restore SIGCONT handler for next call
+		restore_term(envaddr, false);
+	}
+	else if	(signum == SIGCONT)
+	{
+		signal(SIGTSTP, &sighandler); //restore SIGTSTP handler for next call
+		select_term(envaddr);
+	}
+
 	signal(signum, SIG_DFL);
 	raise(signum);
+//	kill(0, signum);//
+
+	if (envaddr == NULL)
+		envaddr = env;
 }
 
-/*
-** Restore the previous Terminal Configuration
-*/
-
-void	restore(t_select *env)
+void	sighandler(int signum)
 {
-	ft_lstdel(&env->files, destroy_file);
-	tcsetattr(STDIN_FILENO, TCSADRAIN, &env->oldtios);
+	sig_switch(signum, NULL);	
 }
 
-/*
-** Finish a proper handler
-*/
-
-void	sighandler(int signum, siginfo_t *siginfo, void *context)
+void	wrap_signal(void)
 {
-	(void)siginfo;
-	(void)context;
+	signal(SIGTSTP, &sighandler);
+	signal(SIGCONT, &sighandler);
 
-	if (signum == SIGINT)
-		hardexit(signum, NULL);
-	if (ft_iserror(signum))
-		hardexit(signum, NULL);
-}
+	signal(SIGWINCH, &sighandler);
 
-/*
-** delete sigemptyset
-** winch handler
-** cont handler
-*/
 
-void	wrap_sigaction(void)
-{
-	struct sigaction sa;
+	signal(SIGINT, &sighandler);
+	signal(SIGQUIT, &sighandler);
+	signal(SIGTERM, &sighandler);
 
-	sa.sa_sigaction = &sighandler;
-	sigemptyset(&sa.sa_mask);//
-	sa.sa_flags = SA_SIGINFO;
-
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGTERM, &sa, NULL);
-
-//	sigaction(SIGKILL, &sa, NULL);
-//	sigaction(SIGSTOP, &sa, NULL);
-
-	sigaction(SIGWINCH, &sa, NULL);
-	sigaction(SIGCONT, &sa, NULL);
-
-	sigaction(SIGILL, &sa, NULL);
-	sigaction(SIGTRAP, &sa, NULL);
-	sigaction(SIGABRT, &sa, NULL);
-	sigaction(SIGFPE, &sa, NULL);
-	sigaction(SIGBUS, &sa, NULL);
-	sigaction(SIGSEGV, &sa, NULL);
+	signal(SIGILL, &sighandler);
+	signal(SIGTRAP, &sighandler);
+	signal(SIGABRT, &sighandler);
+	signal(SIGFPE, &sighandler);
+	signal(SIGBUS, &sighandler);
+	signal(SIGSEGV, &sighandler);
 }

@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/09 23:32:55 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/10 19:03:05 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,14 +33,15 @@ HEADERS= ft_select.h
 
 SRCS= main.c\
       ft_select.c\
-      tools.c\
       signal.c\
       files.c\
-      termcaps.c\
       print.c\
+      term.c\
       window.c\
       user_input.c\
-      arrowkey.c
+      arrowkey.c\
+      error.c\
+      termcaps.c\
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj

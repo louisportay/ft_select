@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 22:09:21 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/10 21:19:30 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	min_lines(int n_files, int fbl)
 void	refresh_window(t_select *env)
 {
 	MINCOL = longest_arg(env->files);
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &env->ws);
 	if ((FBL = max_files_on_a_line(env->min_col, env->ws.ws_col)) == 0)
 	{
 		MINLIN = min_lines(ft_lstcount(env->files), 1);

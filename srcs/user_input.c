@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 23:44:22 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/10 19:01:20 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 
 static void	spacekey(void)
 {
-
+	ft_putstr("\nSPACE\n");
 }
 
 static void	enterkey(void)
 {
-
+	ft_putstr("\nENTER\n");
 }
 
 
 static void	deletekey(void)
 {
-
+	ft_putstr("\nDELETE\n");
 }
 
-static void	escapekey(void)
+static void	escapekey(t_select *env)
 {
-
+	restore_term(env, true);
+	exit(EXIT_SUCCESS);
 }
 
 /*
@@ -38,18 +39,21 @@ static void	escapekey(void)
 ** space == 32 == ' '
 ** enter == '\n'
 ** escape == '\033' == 27
+** delete == '\177\' == 127 == \033[3~
 */
 
-void	user_input(char *buf)
+void	user_input(char *buf, t_select *env)
 {
 	if (buf[0] == ' ')
 		spacekey();
 	else if (buf[0] == '\n')
 		enterkey();
+	else if (buf[0] == '\177')
+		deletekey();
 	else if (buf[0] == '\033')
 	{
-		if (buf[1] == '\n')
-			escapekey();
+		if (buf[1] == '\0')
+			escapekey(env);
 		else if (buf[1] == '[')
 		{
 			if (buf[2] == 'A')
