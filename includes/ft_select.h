@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/10 20:43:16 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 18:05:31 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@
 ** Error strings
 */
 
-#define NOINPUT_STR "Usage: ft_select [FILE]...\n"
-#define NOTERM_STR "TERM environment variable not set.\n"
-#define NOTERMDB_STR "No database found for this terminal.\n"
-#define NOATTR_STR "Couldn't retrieve terminal attributes.\n"
-#define NOWINDOW_STR "Couldn't retrieve window attributes.\n"
+#define	NOINPUT_STR	"Usage: ft_select [FILE]...\n"
+#define	NOTERM_STR	"TERM environment variable not set.\n"
+#define	NOTERMDB_STR	"No database found for this terminal.\n"
+#define	NOATTR_STR	"Couldn't retrieve terminal attributes.\n"
+#define	NOWINDOW_STR	"Couldn't retrieve window attributes.\n"
+#define	SHITTYINPUT_STR	"The input sent is invalid, Use a filename instead\n"
 
 enum	e_errcode
 {
@@ -55,13 +56,14 @@ enum	e_errcode
 	NOTERMDB,
 	NOATTR,
 	NOWINDOW,
+	SHITTYINPUT,
 };
 
 typedef struct		s_file
 {
 	char		*filename;
-//	char		select : 1;
-//	char		cursor : 1;
+	unsigned char	select : 1;
+	unsigned char	cursor : 1;
 }			t_file;
 
 /*
@@ -91,6 +93,7 @@ typedef struct		s_select
 void	ft_select(int ac, char **av);
 
 void	fatal_err(int errcode);
+void	wrap_exit(t_select *env, int status);
 
 void	sig_switch(int signum, t_select *env);
 void	wrap_signal(void);

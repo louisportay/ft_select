@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/10 18:05:12 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/10 18:27:13 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 17:52:48 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Apply the Select Terminal Configuration
-** Called after a SIGCONT
+** Function called after a SIGCONT and on launch
 */
 
 void	select_term(t_select *env)
@@ -26,7 +26,7 @@ void	select_term(t_select *env)
 
 /*
 ** Restore the previous Terminal Configuration
-** Called after a SIGTSTP
+** Function called after a SIGTSTP and when quitting the program
 */
 
 void	restore_term(t_select *env, bool del)

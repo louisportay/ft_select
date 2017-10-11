@@ -6,13 +6,13 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/10 20:45:02 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 17:22:28 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-int init(t_select *env, int ac, char **av)
+static int init(t_select *env, int ac, char **av)
 {
 	char *tmp;
 
@@ -35,7 +35,11 @@ int init(t_select *env, int ac, char **av)
 	env->tios.c_cc[VMIN] &= 1;
 	env->tios.c_cc[VTIME] &= 100; // test 0 ?
 
-	fill_lst(&env->files, ++av);	// increment av to remove "./ft_select from the arguments 
+	fill_lst(&env->files, ++av);
+	if (!env->files)
+		return (SHITTYINPUT);
+
+	((t_file *)env->files->content)->cursor = 1;
 
 	return (SUCCESS);
 }
@@ -51,6 +55,7 @@ void	ft_select(int ac, char **av)
 	sig_switch(0, &env);
 	wrap_signal();
 	select_term(&env);
+	refresh_window(&env);
 	while (1)
 	{
 		print_files(&env);

@@ -11,13 +11,16 @@ BONUS
 man termio
 man terminfo
 
+man gittutorial
+man gittutorial-2
+man giteveryday
+
+man doxygen
 
 TO HANDLE
 
 bg (comme un SIGCONT 19, 18, 25)
 gerer les backquotes (bonne sortie sur le STDIN_FILENO ou 1)
-
-envoyer une info dans le read (avec ioctl ?) qui dit de free et de exit
 
 flag ~ISIG pour transformer les signaux en caracteres
 

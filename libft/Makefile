@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/10 19:46:23 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/11 17:12:19 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,7 @@ STDLIB=	ft_bwidth.c\
 
 STDIO=	get_next_line.c\
 	ft_putchar.c\
+	ft_putnchar.c\
 	ft_putstr.c\
 	ft_putnbr.c\
 	ft_putendl.c\

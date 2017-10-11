@@ -6,15 +6,33 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/10 21:22:21 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 18:12:59 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-//	GERER LE PADDING ET LE MESSAGE DE FENETRE TROP PETITE
+/*
+** This could be done with escape sequences as well, but it's a termcap project.
+*/
 
-void	display(t_select *env)
+static void	activate_print_options(t_file *file)
+{
+	if (file->select & 1)
+		tputs(tgetstr("mr", NULL), 1, ft_putchar);
+	if (file->cursor & 1)
+		tputs(tgetstr("us", NULL), 1, ft_putchar);
+}
+
+static void	deactivate_print_options(t_file *file)
+{
+	if (file->select & 1)
+		tputs(tgetstr("me", NULL), 1, ft_putchar);
+	if (file->cursor & 1)
+		tputs(tgetstr("ue", NULL), 1, ft_putchar);
+}
+
+static void	display(t_select *env)
 {
 	t_list	*tmp;
 	int	i;
@@ -23,31 +41,23 @@ void	display(t_select *env)
 	i = 0;
 	while (tmp != NULL)
 	{
-		ft_printf("%-*s", MINCOL, ((t_file *)tmp->content)->filename);
-		i++;
-		if (i == env->filesbyline)
-		{
+		activate_print_options((t_file *)tmp->content);
+		ft_putstr(((t_file *)tmp->content)->filename); // filename
+		deactivate_print_options((t_file *)tmp->content);
+		ft_putnchar(' ', MINCOL - ft_strlen(((t_file *)tmp->content)->filename)); // padding
+		if ((++i % env->filesbyline) == 0)
 			ft_putchar('\n');
-			i = 0;
-		}
 		tmp = tmp->next;
 	}
 }
 
 void	print_files(t_select *env)
 {
+//	if (ft_lstcount(env->files) == 0)
+//		wrap_exit(env, EXIT_SUCCESS); 		// When all files has been extermined
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
-	refresh_window(env);
-	printf("%d\n", MINCOL);
-//	ft_printf("\nMINCOL=%d\nFBL=%d\n", MINLIN, FBL);
-
-//	ft_putnbr(MINLIN);
-//	ft_putchar('\n');
-//	ft_putnbr(env->ws.ws_row);
-//	ft_putchar('\n');
-
-//	if (FBL <= 0 || MINLIN > env->ws.ws_row)
-//		ft_putstr("Too small window\n");
-//	else
-//		display(env);
+	if (FBL == 0 || MINLIN > env->ws.ws_row)
+		ft_putstr("Too small window\n");
+	else
+		display(env);
 }

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 14:36:10 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 22:07:36 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 16:51:52 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ t_file	*new_file(char *filename)
 	if (!(new = (t_file *)malloc(sizeof(t_file))))
 		return (NULL);
 	new->filename = ft_strdup(filename);
+	new->select = 0;
+	new->cursor = 0;
 	return (new);
 }
 
 /*
-** Function  to pass to lstdel to delete a file in the list
+** Function to pass to lstdel to delete a file in the list
 */
 
 void	destroy_file(void *content, size_t content_size)
@@ -34,16 +36,20 @@ void	destroy_file(void *content, size_t content_size)
 	ft_memdel(&content);
 }
 
+/*
+** Convert the av array in a list of "struct *files"
+*/
+
 void	fill_lst(t_list **files, char **av)
 {
-	while (*av == NULL || ft_strcmp(*av, "") == 0)
+	*files = NULL;
+	while (*av && ft_strlen(*av) == 0)
 		av++;
-	*files = ft_lstnewaddr(new_file(*av), sizeof(t_file));
-	if (av != NULL)
-		av++;
+	if (*av)
+		*files = ft_lstnewaddr(new_file(*av++), sizeof(t_file));
 	while (*av)
 	{
-		if (*av != NULL && ft_strcmp(*av, "") != 0)
+		if (*av && ft_strlen(*av))
 			ft_lstaddend(files, ft_lstnewaddr(new_file(*av), sizeof(t_file)));
 		av++;
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 23:27:25 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 15:41:40 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	dump_err(int errcode)
 		ft_putstr(NOATTR_STR);
 	else if (errcode == NOWINDOW)
 		ft_putstr(NOWINDOW_STR);
+	else if (errcode == SHITTYINPUT)
+		ft_putstr(SHITTYINPUT_STR);
 }
 
 /*
@@ -34,4 +36,10 @@ void		fatal_err(int errcode)
 {
 	dump_err(errcode);
 	exit(errcode);
+}
+
+void		wrap_exit(t_select *env, int status)
+{
+	restore_term(env, true);
+	exit(status);
 }

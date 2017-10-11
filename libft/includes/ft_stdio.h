@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 16:21:49 by lportay           #+#    #+#             */
-/*   Updated: 2017/09/26 18:32:14 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/11 17:13:59 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	ft_putendl(char const *s);
 void	ft_putstr(char const *s);
 void	ft_putnbr(long n);
 int	ft_putchar(int c);
+void	ft_putnchar(char c, size_t n);
 
 #endif

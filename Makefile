@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/10 19:03:05 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/11 17:53:12 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,7 @@ SRCS= main.c\
       window.c\
       user_input.c\
       arrowkey.c\
-      error.c\
-      termcaps.c\
+      tools.c\
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj
