@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/11 18:12:59 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/13 17:28:12 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	display(t_select *env)
 	while (tmp != NULL)
 	{
 		activate_print_options((t_file *)tmp->content);
-		ft_putstr(((t_file *)tmp->content)->filename); // filename
+		ft_putstr_fd(STDIN_FILENO, ((t_file *)tmp->content)->filename);					// filename
 		deactivate_print_options((t_file *)tmp->content);
-		ft_putnchar(' ', MINCOL - ft_strlen(((t_file *)tmp->content)->filename)); // padding
+		ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(((t_file *)tmp->content)->filename));	// padding
 		if ((++i % env->filesbyline) == 0)
 			ft_putchar('\n');
 		tmp = tmp->next;
@@ -53,11 +53,11 @@ static void	display(t_select *env)
 
 void	print_files(t_select *env)
 {
-//	if (ft_lstcount(env->files) == 0)
-//		wrap_exit(env, EXIT_SUCCESS); 		// When all files has been extermined
+	if (ft_lstcount(env->files) == 0)
+		wrap_exit(env, EXIT_SUCCESS);
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
 	if (FBL == 0 || MINLIN > env->ws.ws_row)
-		ft_putstr("Too small window\n");
+		ft_putstr_fd(STDIN_FILENO, "Too small window\n");
 	else
 		display(env);
 }

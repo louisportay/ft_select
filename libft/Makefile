@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/11 17:12:19 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/13 17:03:51 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,14 +100,18 @@ STDLIB=	ft_bwidth.c\
 
 STDIO=	get_next_line.c\
 	ft_putchar.c\
+	ft_putchar_fd.c\
 	ft_putnchar.c\
+	ft_putnchar_fd.c\
 	ft_putstr.c\
+	ft_putstr_fd.c\
 	ft_putnbr.c\
 	ft_putendl.c\
 	ft_getchar.c
 
 LST=	ft_lstadd.c\
 	ft_lstaddend.c\
+	ft_lstaddr.c\
 	ft_lstprint.c\
 	ft_lstdel.c\
 	ft_lstdelone.c\
@@ -136,6 +140,7 @@ DLST=   ft_dlstadd.c\
 	ft_dlstend.c
 
 BUFFER= putc_in_buf.c\
+	putc_in_buf_fd.c\
 	putnbr_in_buf.c\
 	putnc_in_buf.c\
 	putns_in_buf.c\

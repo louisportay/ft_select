@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 16:52:21 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/04 20:51:31 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/12 12:05:27 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			ft_lstremove(t_list **alst, size_t rank, void (*del)(void *,
 			size_t));
 size_t			ft_lstcount(t_list *lst);
 size_t			ft_lstindex(t_list *lst, t_list *maillon);
-t_list			*ft_lst_at(t_list *lst, size_t n);
+t_list			*ft_lstaddr(t_list *lst, size_t n);
 t_list			*ft_lstend(t_list *lst);
 void			ft_lstmerge(t_list *lst1, t_list *lst2);
 t_list			*ft_tabtolst(char **tab);

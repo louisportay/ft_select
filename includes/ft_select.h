@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/11 18:05:31 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/13 16:02:40 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ typedef struct		s_select
 
 	t_list		*files;
 
-	unsigned char	min_col;
-	unsigned char	filesbyline;
-	unsigned char	min_lines;
+	unsigned short	min_col;
+	unsigned short	filesbyline;
+	unsigned short	min_lines;
 }			t_select;
 
 void	ft_select(int ac, char **av);
@@ -110,10 +110,5 @@ void	print_files(t_select *env);
 void	refresh_window(t_select *env);
 
 void	user_input(char *buf, t_select *env);
-
-void	uparrowkey(void);
-void	downarrowkey(void);
-void	leftarrowkey(void);
-void	rightarrowkey(void);
 
 #endif

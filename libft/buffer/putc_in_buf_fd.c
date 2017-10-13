@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arrowkey.c                                         :+:      :+:    :+:   */
+/*   putc_in_buf_fd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/09 23:29:59 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/11 17:37:40 by lportay          ###   ########.fr       */
+/*   Created: 2017/03/03 15:08:55 by lportay           #+#    #+#             */
+/*   Updated: 2017/10/13 16:53:20 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "libft.h"
 
-//	MAKE IT BOUNCE AROUND
+/*
+** Insert the character 'a' in the buffer 'buf', add 1 to i and print to the buffer
+** to 'fd' if it's full
+*/
 
-void	uparrowkey(void)
+void	putc_in_buf_fd(int fd, char a, char *buf, size_t *i)
 {
-	ft_putstr("\n\e[31mUPKEY\e[0m\n");
+	buf[(*i)++ % BUFF_SIZE] = a;
+	if ((*i % BUFF_SIZE) == 0 && *i != 0)
+		write(fd, buf, BUFF_SIZE);
 }
-
-void	downarrowkey(void)
-{
-	ft_putstr("\n\e[32mDOWNKEY\e[0m\n");
-}
-
-void	leftarrowkey(void)
-{
-	ft_putstr("\n\e[33mLEFTKEY\e[0m\n");
-}
-
-void	rightarrowkey(void)
-{
-	ft_putstr("\n\e[34mRIGHTKEY\e[0m\n");
-}
-
