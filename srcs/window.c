@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/13 16:03:25 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/18 20:37:52 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ static int	longest_arg(t_list *lst)
 	{
 		len = ft_strlen(((t_file *)(lst->content))->filename);
 		lst = lst->next;
-		if (len > col_w)
-			col_w = (len % MCW) ? ((len / MCW) * MCW)  + MCW : len;
+		if (len >= col_w)
+			col_w = ((len % MCW) ? ((len / MCW) * MCW): len) + MCW;
 	}
 	return (col_w);
 }
 
 /*
 ** Return the number of files a line can hold
-** if return 0 --> Error
+** if return 0, it's an Error
 */
 
 static int	max_files_on_a_line(int ws_col, int min_col)
@@ -45,7 +45,6 @@ static int	max_files_on_a_line(int ws_col, int min_col)
 
 /*
 ** Return the minimum number of lines to print
-** Dump an error if min_files < ws_row
 */
 
 static int	min_lines(int n_files, int fbl)

@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/12 19:54:06 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/18 19:44:41 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ vpath %.c srcs/
 export $(DEBUG)
 
 CC= gcc-7 
-DEBUG=yes
+DEBUG=sanitize
 OPT=LIB
 ARCH= $(shell uname)
 
@@ -40,6 +40,8 @@ SRCS= main.c\
       window.c\
       user_input.c\
       tools.c\
+      key.c\
+      bonuskey.c\
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj

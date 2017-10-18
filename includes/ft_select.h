@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/13 16:02:40 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/18 21:24:26 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "libft.h"
 # include <sys/ioctl.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <termios.h>
 # include <term.h>
 # include <curses.h>
+# include <fcntl.h>
 # include <signal.h>
 # include <stdbool.h>
 
@@ -62,8 +64,8 @@ enum	e_errcode
 typedef struct		s_file
 {
 	char		*filename;
-	unsigned char	select : 1;
-	unsigned char	cursor : 1;
+/*unsigned char*/ bool	select : 1;
+/*unsigned char*/ bool	cursor : 1;
 }			t_file;
 
 /*
@@ -82,18 +84,19 @@ typedef struct		s_select
 	struct termios	tios;
 	struct termios	oldtios;
 	struct winsize	ws;
-
 	t_list		*files;
-
 	unsigned short	min_col;
 	unsigned short	filesbyline;
 	unsigned short	min_lines;
+	bool		color : 1;
 }			t_select;
 
 void	ft_select(int ac, char **av);
 
 void	fatal_err(int errcode);
 void	wrap_exit(t_select *env, int status);
+
+int	ft_putchar_stdin(int c);
 
 void	sig_switch(int signum, t_select *env);
 void	wrap_signal(void);
@@ -102,13 +105,19 @@ void	sighandler(int signum);
 void	restore_term(t_select *env, bool del);
 void	select_term(t_select *env);
 
-t_file	*new_file(char *filename);
-void	destroy_file(void *content, size_t content_size);
 void	fill_lst(t_list **files, char **av);
 
 void	print_files(t_select *env);
 void	refresh_window(t_select *env);
 
 void	user_input(char *buf, t_select *env);
+t_list	*addr_cursor_file(t_list *lst);
+
+void	spacekey(t_select *env);
+void	enterkey(t_select *env);
+void	deletekey(t_select *env);
+
+void	selectallfiles(t_select *env, bool selectype);
+void	deletefalsefiles(t_select *env);
 
 #endif

@@ -6,11 +6,15 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 11:33:53 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/09 22:53:51 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/18 16:41:17 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+/*
+** No need to explain much things here
+*/
 
 int	main(int ac, char **av)
 {
