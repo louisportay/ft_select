@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/13 17:03:51 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/19 16:12:01 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ STRING=	ft_bzero.c\
 	ft_strupper.c\
 	ft_strcmp.c\
 	ft_strncmp.c\
+	ft_strmatch.c\
 	ft_strrep.c\
 	ft_strstr.c\
 	ft_strstri.c\

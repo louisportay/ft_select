@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 18:25:18 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 21:33:50 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 10:31:46 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static bool	isthistheend(int signum)
 {
-	if (signum == SIGINT || signum == SIGQUIT || signum == SIGTERM ||
-	signum == SIGILL ||signum == SIGTRAP ||signum == SIGABRT || signum
-		== SIGFPE || signum == SIGBUS || signum == SIGSEGV)
+	if (signum == SIGINT || signum == SIGQUIT || signum == SIGTERM
+		|| signum == SIGILL || signum == SIGTRAP || signum == SIGABRT
+		|| signum == SIGFPE || signum == SIGBUS || signum == SIGSEGV)
 		return (true);
 	return (false);
 }

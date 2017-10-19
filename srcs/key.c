@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:44:49 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 21:22:39 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 10:47:40 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	enterkey(t_select *env)
 		if (((t_file *)tmp->content)->select == 1)
 		{
 			ft_putstr(((t_file *)tmp->content)->filename);
-			ft_putchar(' ');
+			write(STDOUT_FILENO, " ", 1);
 		}
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 19:43:50 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 13:46:06 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int init(t_select *env, int ac, char **av)
 	if (!env->files)
 		return (SHITTYINPUT);
 	((t_file *)env->files->content)->cursor = 1;
+	ft_bzero(env->buf, 255);
 	env->color = true;
 	return (SUCCESS);
 }

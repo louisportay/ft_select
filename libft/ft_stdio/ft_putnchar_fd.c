@@ -6,11 +6,15 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/11 16:57:11 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/13 17:03:28 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 16:55:50 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/*
+** Print 'n' times the char 'c' on 'fd'
+*/
 
 void	ft_putnchar_fd(int fd, char c, size_t n)
 {

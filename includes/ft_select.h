@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 21:24:26 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 17:32:05 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,28 @@
 #define MINLIN env->min_lines
 
 /*
+** Colors
+*/
+
+#define BLACK		"\e[30m"
+#define RED		"\e[31m"
+#define GREEN		"\e[32m"
+#define YELLOW		"\e[33m"
+#define BLUE		"\e[34m"
+#define MAGENTA		"\e[35m"
+#define CYAN		"\e[36m"
+#define LIGHT_GRAY	"\e[37m"
+#define DEFAULT		"\e[39m"
+#define DARK_GRAY	"\e[90m"
+#define LIGHT_RED	"\e[91m"
+#define LIGHT_GREEN	"\e[92m"
+#define LIGHT_YELLOW	"\e[93m"
+#define LIGHT_BLUE	"\e[94m"
+#define LIGHT_MAGENTA	"\e[95m"
+#define LIGHT_CYAN	"\e[96m"
+#define WHITE		"\e[97m"
+
+/*
 ** Error strings
 */
 
@@ -64,8 +86,8 @@ enum	e_errcode
 typedef struct		s_file
 {
 	char		*filename;
-/*unsigned char*/ bool	select : 1;
-/*unsigned char*/ bool	cursor : 1;
+	bool	select : 1;
+	bool	cursor : 1;
 }			t_file;
 
 /*
@@ -77,10 +99,14 @@ typedef struct		s_file
 ** min_lines == le nombre minimum dont doit disposer le terminal pour imprimer
 **		le nom de tous les fichiers, depend de filesbyline et du nombre
 **		de fichiers passe au programme
+**
+** struct termios = 60 bytes
+** struct winsize = 8 bytes
 */
 
 typedef struct		s_select
 {
+	char		buf[256];
 	struct termios	tios;
 	struct termios	oldtios;
 	struct winsize	ws;
@@ -92,32 +118,24 @@ typedef struct		s_select
 }			t_select;
 
 void	ft_select(int ac, char **av);
-
 void	fatal_err(int errcode);
 void	wrap_exit(t_select *env, int status);
-
 int	ft_putchar_stdin(int c);
-
 void	sig_switch(int signum, t_select *env);
 void	wrap_signal(void);
 void	sighandler(int signum);
-
 void	restore_term(t_select *env, bool del);
 void	select_term(t_select *env);
-
 void	fill_lst(t_list **files, char **av);
-
 void	print_files(t_select *env);
 void	refresh_window(t_select *env);
-
 void	user_input(char *buf, t_select *env);
 t_list	*addr_cursor_file(t_list *lst);
-
 void	spacekey(t_select *env);
 void	enterkey(t_select *env);
 void	deletekey(t_select *env);
-
 void	selectallfiles(t_select *env, bool selectype);
 void	deletefalsefiles(t_select *env);
+void	dynamic_search(char c, t_select *env);
 
 #endif

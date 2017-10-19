@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 21:29:00 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 17:39:11 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ void	check_extension(char *filename)
 	char *tmp;
 
 	if ((tmp = ft_strstr(filename, ".c")) && (*(tmp + 2) == '\0'))
-		ft_putstr("\e[34m");
+		ft_putstr(BLUE);
 	else if ((tmp = ft_strstr(filename, ".h")) && (*(tmp + 2) == '\0'))
-		ft_putstr("\e[90m");
+		ft_putstr(DARK_GRAY);
 	else if ((tmp = ft_strstr(filename, ".out")) && (*(tmp + 4) == '\0'))
-		ft_putstr("\e[31m");
+		ft_putstr(RED);
 	else if ((tmp = ft_strstr(filename, ".py")) && (*(tmp + 3) == '\0'))
-		ft_putstr("\e[92m");
+		ft_putstr(LIGHT_GREEN);
 	else if ((tmp = ft_strstr(filename, ".php")) && (*(tmp + 4) == '\0'))
-		ft_putstr("\e[33m");
+		ft_putstr(YELLOW);
 	else if ((tmp = ft_strstr(filename, ".cpp")) && (*(tmp + 4) == '\0'))
-		ft_putstr("\e[95m");
+		ft_putstr(LIGHT_MAGENTA);
 	else if ((tmp = ft_strstr(filename, ".rb")) && (*(tmp + 3) == '\0'))
-		ft_putstr("\e[91m");
+		ft_putstr(LIGHT_RED);
 }
 
 /*
@@ -50,11 +50,11 @@ static void	activate_print_options(t_file *file, bool color)
 	{
 		lstat(file->filename, &buf);
 		if (S_ISDIR(buf.st_mode))
-			ft_putstr("\e[94m");
+			ft_putstr(LIGHT_BLUE);
 		else if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode))
-			ft_putstr("\e[93m");
+			ft_putstr(LIGHT_YELLOW);
 		else if (S_ISLNK(buf.st_mode))
-			ft_putstr("\e[96m");
+			ft_putstr(LIGHT_CYAN);
 		else
 			check_extension(file->filename);
 	}
@@ -70,7 +70,7 @@ static void	activate_print_options(t_file *file, bool color)
 
 static void	deactivate_print_options(t_file *file)
 {
-	ft_putstr("\e[0m");
+	ft_putstr(DEFAULT);
 	if (file->select & 1)
 		tputs(tgetstr("me", NULL), 1, ft_putchar_stdin);
 	if (file->cursor & 1)
@@ -95,7 +95,7 @@ static void	display(t_select *env)
 		deactivate_print_options((t_file *)tmp->content);
 		ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(((t_file *)tmp->content)->filename));
 		if ((++i % env->filesbyline) == 0)
-			ft_putchar_fd(STDIN_FILENO, '\n');
+			write(STDIN_FILENO, "\n", 1);
 		tmp = tmp->next;
 	}
 }
@@ -112,8 +112,15 @@ void	print_files(t_select *env)
 	if (ft_lstcount(env->files) == 0)
 		wrap_exit(env, EXIT_SUCCESS);
 	tputs(tgetstr("cl", NULL), 1, ft_putchar_stdin);
-	if (FBL == 0 || MINLIN > env->ws.ws_row)
-		ft_putstr_fd(STDIN_FILENO, "Too small window\n");
-	else
+	if (FBL != 0 && MINLIN < env->ws.ws_row)
+	{
 		display(env);
+	//	tputs(tgetstr("do", NULL), 1, ft_putchar_stdin);
+	//	tputs(tgetstr("DO", NULL), env->ws.ws_row - MINLIN, ft_putchar_stdin);	
+	//	ft_putnchar_fd(STDIN_FILENO, '\n', env->ws.ws_row - MINLIN);
+		ft_putstr_fd(STDIN_FILENO, env->buf);//
+	}
+	else
+		ft_putstr_fd(STDIN_FILENO, "Too small window\n");
+
 }

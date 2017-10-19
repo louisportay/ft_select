@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 21:14:24 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 17:46:53 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	user_input(char *buf, t_select *env)
 		enterkey(env);
 	else if (buf[0] == '\177')
 		deletekey(env);
+	else if (ft_isalnum(buf[0]) == true || buf[0] == '\\' || buf[0] == '.' || buf[0] == '/')
+		dynamic_search(buf[0], env);
 	else if (buf[0] == '#')
 		env->color = !(env->color);
 	else if (buf[0] == '*')

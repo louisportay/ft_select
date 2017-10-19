@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strmatch.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lportay <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/07 11:34:41 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 16:43:54 by lportay          ###   ########.fr       */
+/*   Created: 2017/10/19 15:49:44 by lportay           #+#    #+#             */
+/*   Updated: 2017/10/19 15:50:24 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Calculate the len of 's' and call write to print it.
-*/
-
-void	ft_putstr(char const *s)
+int		ft_strmatch(const char *s1, const char *s2)
 {
-	size_t	i;
+	int i;
 
-	i = ft_strlen(s);
-	write(STDOUT_FILENO, s, i);
+	i = 0;
+	while (*s1 == *s2)
+	{
+		if (*s1++ == '\0')
+			return (i);
+		s2++;
+		i++;
+	}
+	return (i);
 }

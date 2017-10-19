@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/24 15:39:37 by lportay           #+#    #+#             */
-/*   Updated: 2017/08/24 21:55:37 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 16:11:33 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_strupper(char *str);
 void	ft_strrev(char *str);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strmatch(const char *s1, const char *s2);
 char	*ft_strstr(const char *big, const char *little);
 char	*ft_strstri(const char *big, const char *little, size_t i);
 void	ft_strrep(char **str, char *new_str);
