@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 17:32:05 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 20:56:18 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct		s_select
 	unsigned short	filesbyline;
 	unsigned short	min_lines;
 	bool		color : 1;
+	bool		print_buf : 1;
 }			t_select;
 
 void	ft_select(int ac, char **av);

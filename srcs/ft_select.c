@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 13:46:06 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 20:36:59 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ static int init(t_select *env, int ac, char **av)
 		return (NOATTR);
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &env->ws) == -1)
 		return (NOWINDOW);
+	fill_lst(&env->files, ++av);
+	if (!env->files)
+		return (SHITTYINPUT);
+
 	env->tios.c_lflag &= ~(ICANON);
 	env->tios.c_lflag &= ~(ECHO);
 	env->tios.c_cc[VMIN] &= 1;
 	env->tios.c_cc[VTIME] &= 0;
-	fill_lst(&env->files, ++av);
-	if (!env->files)
-		return (SHITTYINPUT);
 	((t_file *)env->files->content)->cursor = 1;
 	ft_bzero(env->buf, 255);
 	env->color = true;
+	env->print_buf = false;
+
 	return (SUCCESS);
 }
 

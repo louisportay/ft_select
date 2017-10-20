@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 17:39:11 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/19 21:07:55 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	check_extension(char *filename)
 
 	if ((tmp = ft_strstr(filename, ".c")) && (*(tmp + 2) == '\0'))
 		ft_putstr(BLUE);
+	if ((tmp = ft_strstr(filename, ".o")) && (*(tmp + 2) == '\0'))
+		ft_putstr(CYAN);
 	else if ((tmp = ft_strstr(filename, ".h")) && (*(tmp + 2) == '\0'))
 		ft_putstr(DARK_GRAY);
 	else if ((tmp = ft_strstr(filename, ".out")) && (*(tmp + 4) == '\0'))
@@ -115,10 +117,8 @@ void	print_files(t_select *env)
 	if (FBL != 0 && MINLIN < env->ws.ws_row)
 	{
 		display(env);
-	//	tputs(tgetstr("do", NULL), 1, ft_putchar_stdin);
-	//	tputs(tgetstr("DO", NULL), env->ws.ws_row - MINLIN, ft_putchar_stdin);	
-	//	ft_putnchar_fd(STDIN_FILENO, '\n', env->ws.ws_row - MINLIN);
-		ft_putstr_fd(STDIN_FILENO, env->buf);//
+		if (env->print_buf == true)
+			ft_printf("\033[%d;0H%s", env->ws.ws_row, env->buf);
 	}
 	else
 		ft_putstr_fd(STDIN_FILENO, "Too small window\n");

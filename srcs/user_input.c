@@ -6,18 +6,11 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 17:46:53 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/20 17:06:08 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
-
-t_list	*addr_cursor_file(t_list *lst)
-{
-	while (lst && ((t_file *)lst->content)->cursor != 1)
-		lst = lst->next;
-	return (lst);
-}
 
 /*
 ** Do some kryptico-wizardry computations to get a fancy cursor moving...
@@ -26,6 +19,8 @@ t_list	*addr_cursor_file(t_list *lst)
 **
 ** 'col' is the number of real columns in use, FBL is only theoretical maximum
 ** (if not there isn't enough files to fill a single line)
+**
+** A finite state machine would have suppressed the need of ternary conditions
 */
 
 static int	calculate_index(short movement, int index, int nb_files, t_select *env)
@@ -105,6 +100,8 @@ void	user_input(char *buf, t_select *env)
 		selectallfiles(env, false);
 	else if (buf[0] == '&')
 		deletefalsefiles(env);
+	else if (buf[0] == '?')
+		env->print_buf = !env->print_buf;
 	else if (buf[0] == '\033')
 	{
 		if (buf[1] == '\0')
@@ -119,8 +116,8 @@ void	user_input(char *buf, t_select *env)
 				move_cursor(1, env);
 			else if (buf[2] == 'D')
 				move_cursor(-1, env);
-		//	else if (buf[2] == '3' && buf[3] == '~') // delete key ?
-		//		deletekey(env);
+			else if (buf[2] == '3' && buf[3] == '~')
+				deletekey(env);
 		}
 	}
 }

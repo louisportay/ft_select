@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/18 17:39:36 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/20 17:01:10 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ int	ft_putchar_stdin(int c)
 {
 	write(STDIN_FILENO, &c, 1);
 	return (c);
+}
+
+t_list	*addr_cursor_file(t_list *lst)
+{
+	while (lst && ((t_file *)lst->content)->cursor != 1)
+		lst = lst->next;
+	return (lst);
 }
