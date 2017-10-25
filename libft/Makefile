@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/25 17:01:50 by lportay           #+#    #+#              #
-#    Updated: 2017/10/19 16:12:01 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/23 17:44:05 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,8 @@ STRING=	ft_bzero.c\
 	ft_strstr.c\
 	ft_strstri.c\
 	ft_strsplitquote.c\
-	ft_strexpand.c
+	ft_strexpand.c\
+	ft_strcat.c\
 
 STDLIB=	ft_bwidth.c\
 	ft_itoa.c\

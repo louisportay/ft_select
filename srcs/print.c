@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 21:07:55 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Look for an extension at the end of the filename and print the corrsponding
-** color sequence
+** color escape sequence
 */
 
 void	check_extension(char *filename)
@@ -44,21 +44,27 @@ void	check_extension(char *filename)
 ** Activate underline and/or reverse video printing and/or colors
 */
 
-static void	activate_print_options(t_file *file, bool color)
+static void	activate_print_options(t_file *file, t_select *env)
 {
 	struct stat buf;
 
-	if (color == true)
+	if (env->color == true)
 	{
-		lstat(file->filename, &buf);
-		if (S_ISDIR(buf.st_mode))
-			ft_putstr(LIGHT_BLUE);
-		else if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode))
-			ft_putstr(LIGHT_YELLOW);
-		else if (S_ISLNK(buf.st_mode))
-			ft_putstr(LIGHT_CYAN);
+		if (env->dirmode == 1 || access(file->filename, F_OK) == 0)
+		{
+			buf.st_mode = 0;
+			lstat(file->filename, &buf);
+			if (S_ISDIR(buf.st_mode))
+				ft_putstr(LIGHT_BLUE);
+			else if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode))
+				ft_putstr(LIGHT_YELLOW);
+			else if (S_ISLNK(buf.st_mode))
+				ft_putstr(LIGHT_CYAN);
+			else
+				check_extension(file->filename);
+		}
 		else
-			check_extension(file->filename);
+			ft_putstr(ITALIC);
 	}
 	if (file->select & 1)
 		tputs(tgetstr("mr", NULL), 1, ft_putchar_stdin);
@@ -72,7 +78,7 @@ static void	activate_print_options(t_file *file, bool color)
 
 static void	deactivate_print_options(t_file *file)
 {
-	ft_putstr(DEFAULT);
+	ft_putstr(RESET);
 	if (file->select & 1)
 		tputs(tgetstr("me", NULL), 1, ft_putchar_stdin);
 	if (file->cursor & 1)
@@ -92,12 +98,16 @@ static void	display(t_select *env)
 	i = 0;
 	while (tmp != NULL)
 	{
-		activate_print_options((t_file *)tmp->content, env->color);
-		ft_putstr_fd(STDIN_FILENO, ((t_file *)tmp->content)->filename);
-		deactivate_print_options((t_file *)tmp->content);
-		ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(((t_file *)tmp->content)->filename));
-		if ((++i % env->filesbyline) == 0)
-			write(STDIN_FILENO, "\n", 1);
+		if (T_FILE(tmp->content)->match == 1)
+		{
+			activate_print_options((t_file *)tmp->content, env);
+				ft_putstr_fd(STDIN_FILENO, T_FILE(tmp->content)->filename);
+			deactivate_print_options((t_file *)tmp->content);
+			ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(T_FILE(tmp->content)->filename));
+
+			if ((++i % env->filesbyline) == 0)
+				write(STDIN_FILENO, "\n", 1);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -116,11 +126,14 @@ void	print_files(t_select *env)
 	tputs(tgetstr("cl", NULL), 1, ft_putchar_stdin);
 	if (FBL != 0 && MINLIN < env->ws.ws_row)
 	{
-		display(env);
+		if (addr_first_matched_file(env->files))//virer ca
+			display(env);
+		else
+			ft_putstr_fd(STDIN_FILENO, BOLD"No Match"RESET);
 		if (env->print_buf == true)
 			ft_printf("\033[%d;0H%s", env->ws.ws_row, env->buf);
 	}
 	else
-		ft_putstr_fd(STDIN_FILENO, "Too small window\n");
-
+		ft_putstr_fd(STDIN_FILENO, BLUE"\'Too "WHITE"Small"RED" Window\'\n"
+					BLUE"by the "WHITE"\'French Tech"RED"Club\' ©"\n"DEFAULT);
 }

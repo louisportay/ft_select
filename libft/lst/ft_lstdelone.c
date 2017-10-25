@@ -6,17 +6,17 @@
 /*   By: lportay <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 20:16:16 by lportay           #+#    #+#             */
-/*   Updated: 2017/05/12 11:52:49 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 19:03:04 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-** Ne pas utiliser cette fonction seule, elle perd l'adresse des maillons
-**suivants, peut eventuellement détruire le dernier et uniquement
-** le denier maillon de la liste.
-** Préférer l'utilisation de lstremove
+** Cette fonction détruit un seul maillon elle ne doit donc pas être utilisé
+** sur le début  d'une liste au risque de perdre tous les maillons suivants.
+** l'utilisation de ft_lstremove est plus haut niveau et est préférable
+** (restore les liens des maillons entre eux après suppression du maillon)
 */
 
 void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
