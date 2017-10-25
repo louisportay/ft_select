@@ -6,45 +6,87 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/20 17:06:08 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 20:05:59 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+//TODELETE
+int nb_match(t_list *files)
+{
+	int match;
+
+	match = 0;
+	while (files)
+	{
+		if (T_FILE(files->content)->match == 1)
+			match++;
+		files = files->next;
+	}
+	return (match);
+}
+
+/*
+** Return the index number of the cursor file (for every matched file before)
+*/
+
+static int index_match(t_list *files, t_list *tmp)
+{
+	int index;
+
+	index = 0;
+	while (files)
+	{
+		if (files == tmp)
+			return (index);
+		else if (T_FILE(files->content)->match == 1)
+			index++;
+		files = files->next;
+	}
+	return (-1);
+}
+
+static t_list *addrmatchonly(t_list *files, int rank)
+{
+	while (files)
+	{
+		if (rank == 0 && T_FILE(files->content)->match == 1)
+			return (files);
+		else if (T_FILE(files->content)->match == 1 && rank != 0)
+			rank--;
+		files = files->next;
+	}
+	return (NULL);
+}
 
 /*
 ** Do some kryptico-wizardry computations to get a fancy cursor moving...
 **
 **				IN 4 DIRECTIONS!
 **
-** 'col' is the number of real columns in use, FBL is only theoretical maximum
-** (if not there isn't enough files to fill a single line)
-**
-** A finite state machine would have suppressed the need of ternary conditions
+** A Complete finite state machine would have been easier to understand
 */
 
-static int	calculate_index(short movement, int index, int nb_files, t_select *env)
+static int	get_index(short movement, int index, int nb_files, t_select *env)
 {
-	int col;
-
-	col = (nb_files < FBL) ? nb_files : FBL;
 	if (index + movement >= nb_files)
 	{
-		if (movement == 1)
+		if (movement == 1 || (nb_files <= FBL && index == (nb_files - 1)))
 			return (0);
 		else
-			return (((index % col) == (col - 1)) ? 0 : ((index % col) + 1));
+			return (((index % FBL) == (FBL - 1)) ? 0 : ((index % FBL) + 1));
 	}
 	else if (index + movement < 0)
 	{
-		if (movement == -1)
+		if (movement == -1 || (nb_files <= FBL && index == 0))
 			return (nb_files - 1);
 		else
 		{
 			if (FBL * MINLIN == nb_files)
-				index += (col * MINLIN) - 1;
+				index += (FBL * MINLIN) - 1;
 			else
-				index += (col * (MINLIN - 1)) - 1;
+				index += (FBL * (MINLIN - 1)) - 1;
 			return (index - ((index >= nb_files) ? FBL : 0));
 		}
 	}
@@ -63,13 +105,17 @@ static int	calculate_index(short movement, int index, int nb_files, t_select *en
 
 static void	move_cursor(short movement, t_select *env)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
-	tmp = addr_cursor_file(env->files);
-	((t_file *)tmp->content)->cursor = 0;
-	tmp = ft_lstaddr(env->files, calculate_index(movement,
-ft_lstindex(env->files, tmp), ft_lstcount(env->files), env));
-	((t_file *)tmp->content)->cursor = 1;
+	if (addr_first_matched_file(env->files) == NULL)//TEJ ca
+		return ;
+	tmp = addr_cursor_file(env->files);//TEJ ca aussi
+	T_FILE(tmp->content)->cursor = 0;
+	if (*env->buf == '\0')//replace if by ternary
+		tmp = ft_lstaddr(env->files, get_index(movement, ft_lstindex(env->files, tmp), ft_lstcount(env->files), env));//virer lstcount
+	else
+		tmp = addrmatchonly(env->files, get_index(movement, index_match(env->files, tmp), nb_match(env->files), env));//virer nb_match
+	T_FILE(tmp->content)->cursor = 1;
 }
 
 /*
@@ -84,39 +130,41 @@ ft_lstindex(env->files, tmp), ft_lstcount(env->files), env));
 
 void	user_input(char *buf, t_select *env)
 {
-	if (buf[0] == ' ')
+	if (*buf == ' ')
 		spacekey(env);
-	else if (buf[0] == '\n')
+	else if (*buf == '\n')
 		enterkey(env);
-	else if (buf[0] == '\177')
+	else if (*buf == '\t')
+		autofill_buffer(env);
+	else if (*buf == '\177')
 		deletekey(env);
-	else if (ft_isalnum(buf[0]) == true || buf[0] == '\\' || buf[0] == '.' || buf[0] == '/')
-		dynamic_search(buf[0], env);
-	else if (buf[0] == '#')
+	else if (ft_isalnum(*buf) == true || *buf == '\\' || *buf == '.' || *buf == '/' || *buf == '!' || *buf == '_')
+		fill_buffer(*buf, env);
+	else if (*buf == '#')
 		env->color = !(env->color);
-	else if (buf[0] == '*')
+	else if (*buf == '*')
 		selectallfiles(env, true);
-	else if (buf[0] == '-')
+	else if (*buf == '-')
 		selectallfiles(env, false);
-	else if (buf[0] == '&')
+	else if (*buf == '&' && env->dirmode == 0)
 		deletefalsefiles(env);
-	else if (buf[0] == '?')
+	else if (*buf == '?')
 		env->print_buf = !env->print_buf;
-	else if (buf[0] == '\033')
+	else if (*buf == '\033')
 	{
-		if (buf[1] == '\0')
+		if (*(buf + 1) == '\0')
 			wrap_exit(env, EXIT_SUCCESS);
-		else if (buf[1] == '[')
+		else if (*(buf + 1) == '[')
 		{
-			if (buf[2] == 'A')
+			if (*(buf + 2) == 'A')
 				move_cursor(-FBL, env);
-			else if (buf[2] == 'B')
+			else if (*(buf + 2) == 'B')
 				move_cursor(FBL, env);
-			else if (buf[2] == 'C')
+			else if (*(buf + 2) == 'C')
 				move_cursor(1, env);
-			else if (buf[2] == 'D')
+			else if (*(buf + 2) == 'D')
 				move_cursor(-1, env);
-			else if (buf[2] == '3' && buf[3] == '~')
+			else if (*(buf + 2) == '3' && *(buf + 3) == '~')
 				deletekey(env);
 		}
 	}

@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstaddr.c                                       :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/10 17:39:24 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 16:21:15 by lportay          ###   ########.fr       */
+/*   Created: 2017/10/23 17:42:31 by lportay           #+#    #+#             */
+/*   Updated: 2017/10/23 17:43:21 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Returns the address of the 'n' maillon 
-** return NULL if n negative
-*/
-
-t_list		*ft_lstaddr(t_list *lst, int n)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	if (n < 0)
-		return (NULL);
-	while (n-- > 0 && lst)
-		lst = lst->next;
-	return (lst);
+	char *tmp;
+
+	tmp = s1;
+	while (*s1)
+		s1++;
+	while (*s2)
+		*s1++ = (unsigned char)*s2++;
+	*s1 = '\0';
+	return (tmp);
 }

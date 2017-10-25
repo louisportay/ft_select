@@ -6,61 +6,46 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/20 17:01:10 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 19:58:20 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
 /*
-** Big switch to print the right error message
+** function written for tputs to output the characters
 */
 
-static void	dump_err(int errcode)
-{
-	if (errcode == NOINPUT)
-		ft_putstr_fd(STDIN_FILENO, NOINPUT_STR);
-	else if (errcode == NOTERM)
-		ft_putstr_fd(STDIN_FILENO, NOTERM_STR);
-	else if (errcode == NOTERMDB)
-		ft_putstr_fd(STDIN_FILENO, NOTERMDB_STR);
-	else if (errcode == NOATTR)
-		ft_putstr_fd(STDIN_FILENO, NOATTR_STR);
-	else if (errcode == NOWINDOW)
-		ft_putstr_fd(STDIN_FILENO, NOWINDOW_STR);
-	else if (errcode == SHITTYINPUT)
-		ft_putstr_fd(STDIN_FILENO, SHITTYINPUT_STR);
-}
-
-/*
-** Print the error message and exit
-*/
-
-void		fatal_err(int errcode)
-{
-	dump_err(errcode);
-	exit(errcode);
-}
-
-/*
-** Restore term config, free the list and exit
-*/
-
-void		wrap_exit(t_select *env, int status)
-{
-	restore_term(env, true);
-	exit(status);
-}
-
-int	ft_putchar_stdin(int c)
+int		ft_putchar_stdin(int c)
 {
 	write(STDIN_FILENO, &c, 1);
 	return (c);
 }
 
-t_list	*addr_cursor_file(t_list *lst)
+/*
+** Close the open file descriptor linked to open directories
+** Called by ft_lstdel in restore_term
+*/
+
+void		wrap_closedir(void *content, size_t len)
 {
-	while (lst && ((t_file *)lst->content)->cursor != 1)
+	(void)len;
+	closedir(content);
+	content = NULL;
+}
+
+//DELETE THESE.
+
+ t_list		*addr_cursor_file(t_list *lst)
+{
+	while (lst && T_FILE(lst->content)->cursor == 0)
+		lst = lst->next;
+	return (lst);
+}
+
+t_list		*addr_first_matched_file(t_list *lst)
+{
+	while (lst && T_FILE(lst->content)->match == 0)
 		lst = lst->next;
 	return (lst);
 }

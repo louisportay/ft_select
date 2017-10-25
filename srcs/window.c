@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 10:35:07 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 17:56:06 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ static int	longest_arg(t_list *lst)
 	col_w = MCW;
 	while (lst)
 	{
-		len = ft_strlen(((t_file *)(lst->content))->filename);
+		if (T_FILE(lst->content)->match == 1)
+		{
+			len = ft_strlen(T_FILE(lst->content)->filename);
+			if (len >= col_w)
+				col_w = ((len % MCW) ? ((len / MCW) * MCW): len) + MCW;
+		}
 		lst = lst->next;
-		if (len >= col_w)
-			col_w = ((len % MCW) ? ((len / MCW) * MCW): len) + MCW;
 	}
 	return (col_w);
 }
@@ -55,16 +58,17 @@ static int	min_lines(int n_files, int fbl)
 /*
 ** Get the new parameters for winsize and the printing of files (new padding)
 **
-** This function is called for 2 reasons:
+** This function is called for 3 reasons:
 ** -Screen resizing
 ** -File Deletion
+** -Dynamic Search
 */
 
 void	refresh_window(t_select *env)
 {
 	MINCOL = longest_arg(env->files);
-	if ((FBL = max_files_on_a_line(env->ws.ws_col, env->min_col)) == 0)
+	if ((FBL = max_files_on_a_line(env->ws.ws_col, MINCOL)) == 0)
 		MINLIN = -1;
 	else
-		MINLIN = min_lines(ft_lstcount(env->files), FBL);
+		MINLIN = min_lines(nb_match(env->files), FBL);//virer nb_match
 }
