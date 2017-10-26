@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:44:49 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/20 17:19:35 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 20:11:28 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 void	spacekey(t_select *env)
 {
-	t_list *tmp;
-
-	tmp = addr_cursor_file(env->files);
-	T_FILE(tmp->content)->cursor = 0;
-	T_FILE(tmp->content)->select = !T_FILE(tmp->content)->select;
-	if (tmp->next)
-		T_FILE(tmp->next->content)->cursor = 1;
+	T_FILE(CF->content)->cursor = 0;
+	T_FILE(CF->content)->select = !T_FILE(CF->content)->select;
+	if ((CF = next_match_on(CF)))
+		T_FILE(CF->content)->cursor = 1;
 	else
-		T_FILE(env->files->content)->cursor = 1;
+	{
+		CF = FMF;
+		T_FILE(CF->content)->cursor = 1;
+	}
 }
 
 /*
@@ -61,11 +61,14 @@ void	deletekey(t_select *env)
 {
 	t_list *tmp;
 
-	tmp = addr_cursor_file(env->files);
-	if (tmp->next)
-		T_FILE(tmp->next->content)->cursor = 1;
+	tmp = CF;
+	if (CF == FMF)
+		FMF = next_match_on(FMF);
+	if ((CF = next_match_on(CF)))
+		T_FILE(CF->content)->cursor = 1;
 	else
-		T_FILE(env->files->content)->cursor = 1;
+		reset_cf(env);
 	ft_lstremove(&env->files, ft_lstindex(env->files, tmp), ft_delvoid);
+	MATCHED_FILES--;
 	refresh_window(env);
 }

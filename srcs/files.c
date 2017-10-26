@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 14:36:10 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 19:13:58 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 19:29:57 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Create a 't_file *' with the fields 'select' and 'cursor' set to 0 and
-**  a pointer to the filename is set as well
+** 'match'a pointer to the filename is set as well
 */
 
 static t_file	*new_file(char *filename)
@@ -102,7 +102,8 @@ void	fill_lst(t_select *env, char **av)
 	while (*av)
 	{
 		if (ft_strlen(*av))
-			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(*av), sizeof(t_file)));
+			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(*av),
+			sizeof(t_file)));
 		av++;
 	}
 }

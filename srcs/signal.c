@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 18:25:18 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/19 10:31:46 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 20:21:27 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	redraw_window(t_select *env)
 
 /*
 ** Perform different actions for the signal sent
-** faking SIGTSTP with ioctl call is bad practice, here's a real SIGTSTP handler
+** faking SIGTSTP with ioctl call is bad practice,
+** Here's what a real SIGTSTP handler should look like
 */
 
 void		sig_switch(int signum, t_select *env)

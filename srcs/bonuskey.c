@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 19:30:15 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 14:11:52 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 20:00:40 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,39 @@ void	selectallfiles(t_select *env, bool selectype)
 	tmp = env->files;
 	while (tmp)
 	{
-		T_FILE(tmp->content)->select = selectype;
+		if (T_FILE(tmp->content)->match)
+			T_FILE(tmp->content)->select = selectype;
 		tmp = tmp->next;
 	}
 }
 
 /*
-** Remove from the list the files that doesn't exist
+** Remove from the list the files that are matched and doesn't exist
 */
 
 void	deletefalsefiles(t_select *env)
 {
 	t_list *tmp;
-	
+
 	tmp = env->files;
 	while (tmp)
 	{
-		if (access(T_FILE(tmp->content)->filename, F_OK) == -1)
+		if (access(T_FILE(tmp->content)->filename, F_OK) == -1 && T_FILE(tmp->content)->match)
 		{
+			if (tmp == FMF)	
+				FMF = next_match_on(FMF);
+			if (tmp == CF)
+				CF = NULL;
 			tmp = tmp->next;
 			ft_lstremove(&env->files, ft_lstindex(env->files, tmp) -1, ft_delvoid);
+			MATCHED_FILES--;
 		}
 		else
 			tmp = tmp->next;
 	}
 	if (!env->files)
 		return ;
-	if ((tmp = addr_cursor_file(env->files)) == NULL)
-		T_FILE(env->files->content)->cursor = 1;
+	if (CF == NULL)
+		reset_cf(env);
 	refresh_window(env);
 }
-

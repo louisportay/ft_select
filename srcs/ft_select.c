@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 19:16:08 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 20:45:10 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ static void	setenv_select(t_select *env)
 	env->tios.c_cc[VMIN] &= 1;
 	env->tios.c_cc[VTIME] &= 0;
 	T_FILE(env->files->content)->cursor = 1;
+	CF = env->files;
+	FMF = env->files;
 	ft_bzero(env->buf, 256);
 	env->buf_index = 0;
+	MATCHED_FILES = ft_lstcount(env->files);
 	env->color = true;
 	env->print_buf = false;
-	//SET LE CF, le CM et le NB_FILE
 }
 
 /*

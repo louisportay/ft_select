@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 17:56:06 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/25 21:08:51 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void	refresh_window(t_select *env)
 	if ((FBL = max_files_on_a_line(env->ws.ws_col, MINCOL)) == 0)
 		MINLIN = -1;
 	else
-		MINLIN = min_lines(nb_match(env->files), FBL);//virer nb_match
+		MINLIN = min_lines(MATCHED_FILES, FBL);
 }

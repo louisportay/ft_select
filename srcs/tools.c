@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 19:58:20 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 11:11:30 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,31 @@ void		wrap_closedir(void *content, size_t len)
 	content = NULL;
 }
 
-//DELETE THESE.
+/*
+** Find the next file with flag 'match' on and return it, return NULL otherwise
+*/
 
- t_list		*addr_cursor_file(t_list *lst)
+t_list		*next_match_on(t_list *lst)
 {
-	while (lst && T_FILE(lst->content)->cursor == 0)
+	lst = lst->next;
+	while (lst)
+	{
+		if (T_FILE(lst->content)->match == 1)
+			return (lst);
 		lst = lst->next;
-	return (lst);
+	}
+	return (NULL);
 }
 
-t_list		*addr_first_matched_file(t_list *lst)
+/*
+** Will set properly the cursor file
+*/
+
+void	reset_cf(t_select *env)
 {
-	while (lst && T_FILE(lst->content)->match == 0)
-		lst = lst->next;
-	return (lst);
+	if (FMF)
+		CF = FMF;
+	else
+		CF = env->files;
+	T_FILE(CF->content)->cursor = 1;
 }

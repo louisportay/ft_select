@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:32:05 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 19:31:11 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 19:47:47 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 static void	print_key(void)
 {
-	ft_putstr("\nft_select, an "STRIKETHROUGH"outstanding"RESET
+	ft_putstr("\nft_select, a "STRIKETHROUGH"great"RESET
 " graphical program by "ITALIC"lportay"RESET"\nHere are keys bindings:\n\n"
 "Up|Down|Left|Right key <==> Move in the list\n"
 "Space <==> Select/Deselect a File\nEnter <==> Return the selection\n"
-"'*' <==> Select all Files\n'-' <==> Deselect all Files\n"
-"'&' <==> Remove non-existing Files\n"
+"Esc <==> exit the clean way, do not send any output\n"
+"Del|Backspace <==> will delete an element in the list\n"
+"Tab <==> Trigger auto-completion feature\n"
+"'*' <==> Select all Files\n"
+"'-' <==> Deselect all Files\n"
+"'&' <==> Remove non-existing Files (in non-directory mode)\n"
 "'#' <==> Activate/Deactivate color printing\n"
-"[Aa-Zz] [0-9] '.' '/' <==> Activate the dynamic search buffer\n"
+"[Aa-Zz] [0-9] [._/] <==> Activate the dynamic search buffer\n"
 "'\\' <==> Delete a character in the search buffer\n"
-"'?' <==> Print/Hide the search buffer\n"
-"'esc' <==> exit the clean way, do not send any output\n"
-"'del' 'backspace' <==> will delete an element in the list\n"
-"'tab' <==> Trigger auto-completion feature\n");
+"'!' <==> Clear the search buffer\n"
+"'?' <==> Print/Hide the search buffer\n");
 }
 /*
 ** Big switch to print the right error message

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 20:44:20 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/26 20:17:22 by lportay          ###   ########.fr       */
 /*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -92,21 +92,20 @@ static void	deactivate_print_options(t_file *file)
 
 static void	display(t_select *env)
 {
-	t_list	*tmp;
-	int	i;
+	t_list		*tmp;
+	unsigned short	i;
 
 	tmp = env->files;
 	i = 0;
 	while (tmp != NULL)
 	{
-		if (T_FILE(tmp->content)->match == 1)
+		if (T_FILE(tmp->content)->match)
 		{
 			activate_print_options((t_file *)tmp->content, env);
 				ft_putstr_fd(STDIN_FILENO, T_FILE(tmp->content)->filename);
 			deactivate_print_options((t_file *)tmp->content);
 			ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(T_FILE(tmp->content)->filename));
-
-			if ((++i % env->filesbyline) == 0)
+			if ((++i % FBL) == 0)
 				write(STDIN_FILENO, "\n", 1);
 		}
 		tmp = tmp->next;
@@ -127,7 +126,7 @@ void	print_files(t_select *env)
 	tputs(tgetstr("cl", NULL), 1, ft_putchar_stdin);
 	if (FBL != 0 && MINLIN < env->ws.ws_row)
 	{
-		if (addr_first_matched_file(env->files))//virer ca
+		if (FMF)
 			display(env);
 		else
 			ft_putstr_fd(STDIN_FILENO, BOLD"No Match"RESET);
@@ -135,6 +134,5 @@ void	print_files(t_select *env)
 			ft_printf("\033[%d;0H%s", env->ws.ws_row, env->buf);
 	}
 	else
-		ft_putstr_fd(STDIN_FILENO, BLUE"\'Too "WHITE"Small"RED" Window\'\n"
-					BLUE"by the "WHITE"\'French Tech"RED"Club\' ©\n"DEFAULT);
+		ft_putstr_fd(STDIN_FILENO, BLUE"\'Too "WHITE"Small "RED"Window\'"RESET"©\n");
 }

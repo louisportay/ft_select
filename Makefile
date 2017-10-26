@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/25 14:12:17 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/26 20:24:59 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS= main.c\
       bonuskey.c\
       exit.c\
       buffer.c\
+      cursor.c\
 
 OBJ= $(SRCS:%.c=%.o)
 OBJDIR= obj
