@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:44:49 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 12:25:17 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/28 01:40:51 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,12 @@ void	deletekey(t_select *env)
 	if ((CF = next_match_on(CF)))
 		T_FILE(CF->content)->cursor = 1;
 	else
-		reset_cf(env);
+		CF = NULL;
 	ft_lstremove(&env->files, ft_lstindex(env->files, tmp), ft_delvoid);
+	if (!env->files)
+		return ;
+	if (CF == NULL)
+		reset_cf(env);
 	MATCHED_FILES--;
 	refresh_window(env);
 }

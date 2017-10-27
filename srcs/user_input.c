@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 23:15:33 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/28 01:44:37 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	user_input(char *buf, t_select *env)
 		spacekey(env);
 	else if (*buf == '\n')
 		enterkey(env);
-	else if (*buf == '\t')
+	else if (*buf == '\t' && T_FILE(CF->content)->match)
 		autofill_buffer(env);
 	else if (*buf == '\177' && T_FILE(CF->content)->match)
 		deletekey(env);
