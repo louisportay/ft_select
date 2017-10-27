@@ -15,7 +15,7 @@
 * See extensive documentation in the header file (`includes/ft_select.h`), every source file contain documentation
 * Comprehensive Error Messages
 * Clean code, deallocate everything at the end, do not browse the list up-and-down for no use (O(n) complexity)
-* Light Memory Footprint (except for the Termcap part), little dynamic memory allocation in the program
+* Very Light Memory Footprint (except for the Termcap part), very few dynamic memory allocation in the program
 * Minimum number of Syscalls (stored the values into the program data structures)
 
 **Known issues**

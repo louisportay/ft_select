@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 21:06:48 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 23:42:21 by lportay          ###   ########.fr       */
 /*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -53,11 +53,8 @@ static void	print_colors(t_file *file)
 ** But it's a termcaps project infortunately...
 */
 
-static void	activate_print_options(t_file *file, t_select *env)
+static void	activate_print_options(t_select *env, t_file *file)
 {
-	static char *mr = NULL;
-	static char *us = NULL;
-
 	if (env->color == true)
 	{
 		if (file->exist)
@@ -65,34 +62,23 @@ static void	activate_print_options(t_file *file, t_select *env)
 		else
 			ft_putstr_fd(STDIN_FILENO, ITALIC);
 	}
-	if (mr == NULL)
-		mr = tgetstr("mr", NULL);
-	if (us == NULL)
-		us = tgetstr("us", NULL);
 	if (file->select & 1)
-		tputs(mr, 1, ft_putchar_stdin);
+		tputs(env->mr, 1, ft_putchar_stdin);
 	if (file->cursor & 1)
-		tputs(us, 1, ft_putchar_stdin);
+		tputs(env->us, 1, ft_putchar_stdin);
 }
 
 /*
 ** Deactivate underline and/or reverse video printing and/or colors
 */
 
-static void	deactivate_print_options(t_file *file)
+static void	deactivate_print_options(t_select *env, t_file *file)
 {
-	static char *me = NULL;
-	static char *ue = NULL;
-
-	if (me == NULL)
-		me = tgetstr("me", NULL);
-	if (ue == NULL)
-		ue = tgetstr("ue", NULL);
 	ft_putstr_fd(STDIN_FILENO, RESET);
 	if (file->select & 1)
-		tputs(me, 1, ft_putchar_stdin);
+		tputs(env->me, 1, ft_putchar_stdin);
 	if (file->cursor & 1)
-		tputs(ue, 1, ft_putchar_stdin);
+		tputs(env->ue, 1, ft_putchar_stdin);
 }
 
 /*
@@ -110,9 +96,9 @@ static void	display(t_select *env)
 	{
 		if (T_FILE(tmp->content)->match)
 		{
-			activate_print_options((t_file *)tmp->content, env);
+			activate_print_options(env, T_FILE(tmp->content));
 				ft_putstr_fd(STDIN_FILENO, T_FILE(tmp->content)->filename);
-			deactivate_print_options((t_file *)tmp->content);
+			deactivate_print_options(env, T_FILE(tmp->content));
 			ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(T_FILE(tmp->content)->filename));
 			if ((++i % FBL) == 0)
 				write(STDIN_FILENO, "\n", 1);

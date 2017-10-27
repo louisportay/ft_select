@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 21:23:02 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 23:33:06 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ typedef struct		s_select
 	t_list		*dir;
 	t_list		*first_matched_file;
 	t_list		*cursor_file;
+	char		*mr;
+	char		*us;
+	char		*me;
+	char		*ue;
 	unsigned short	matched_files;
 	unsigned short	min_col;
 	unsigned char	filesbyline;

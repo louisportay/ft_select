@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 21:14:04 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 23:15:33 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	user_input(char *buf, t_select *env)
 {
-	if (*buf == ' ')
+	if (*buf == ' ' && T_FILE(CF->content)->match)
 		spacekey(env);
 	else if (*buf == '\n')
 		enterkey(env);
