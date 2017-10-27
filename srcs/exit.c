@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:32:05 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 19:47:47 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 18:29:32 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ static void	print_key(void)
 "Tab <==> Trigger auto-completion feature\n"
 "'*' <==> Select all Files\n"
 "'-' <==> Deselect all Files\n"
-"'&' <==> Remove non-existing Files (in non-directory mode)\n"
+"'&' <==> Remove visible non-existing Files\n"
+"'^' <==> Remove all visible selected files\n"
 "'#' <==> Activate/Deactivate color printing\n"
 "[Aa-Zz] [0-9] [._/] <==> Activate the dynamic search buffer\n"
 "'\\' <==> Delete a character in the search buffer\n"
 "'!' <==> Clear the search buffer\n"
+"'~' <==> Clear gradually the search buffer\n"
 "'?' <==> Print/Hide the search buffer\n");
 }
 /*

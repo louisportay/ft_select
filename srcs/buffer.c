@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 13:57:01 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 18:36:12 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:13:53 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,16 @@ void	fill_buffer(char c, t_select *env)
 		ft_bzero(env->buf, 255);
 		BUFI = 0;
 	}
+	else if (c == '`' && BUFI > 0)
+	{
+		if (env->buf[BUFI - 1] == '/')
+			env->buf[--BUFI] = '\0';
+		if (BUFI > 0)
+			BUFI -= remove_filename(env->buf);
+	}
 	else if (c == '\\' && BUFI > 0)
 		env->buf [--BUFI] = '\0';
-	else if (c != '\\' && BUFI < 255)
+	else if (c != '\\' && c != '`' && BUFI < 255)
 		env->buf[BUFI++] = c;
 	dynamic_search(env);
 }
@@ -90,16 +97,17 @@ void	fill_buffer(char c, t_select *env)
 
 void	autofill_buffer(t_select *env)
 {
-	size_t len;
-
-	len = ft_strlen(env->buf);
-	if (ft_strncmp(T_FILE(CF->content)->filename, env->buf, len) == 0)
+	if (ft_strncmp(T_FILE(CF->content)->filename, env->buf, BUFI) == 0)
 	{
-		while (T_FILE(CF->content)->filename[len] != '\0' && T_FILE(CF->content)->filename[len - 1] != '/' && len < 255)
+		while (T_FILE(CF->content)->filename[BUFI] != '\0' && T_FILE(CF->content)->filename[BUFI] != '/' && BUFI < 255)
 		{
-			env->buf[len] = T_FILE(CF->content)->filename[len];
-			len++;
-			(BUFI)++;
+			env->buf[BUFI] = T_FILE(CF->content)->filename[BUFI];
+			BUFI++;
+		}
+		if (T_FILE(CF->content)->filename[BUFI] == '/')
+		{
+			env->buf[BUFI] = T_FILE(CF->content)->filename[BUFI];
+			BUFI++;
 		}
 	}
 	dynamic_search(env);

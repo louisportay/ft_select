@@ -6,7 +6,7 @@
 #The cursor moves in 4 directions (More complicated to implement than to say...)
 #Signal handling well executed (no ioctl call), will always restore the terminal as it was at the origin, even if deadly signal happen (Compile without ASAN)
 #Job control working fine (CTRL-Z, fg, bg), TERM environment handled properly
-# 'directory' mode -- Open the directories given in arguments and retrieve the files inside them.
+# 'directory' mode -- Open the directories given in arguments and retrieve the files inside them. Do not pass arguments of length greater than 512(Or it will likely crash or cause an heap-buffer overflow)
 #Portable over Linux (Debian) and OS X (Sierra)
 #Screen Resizing (without flashes)
 #'Smart Padding' will change when the matched files change
@@ -16,6 +16,7 @@
 #Comprehensive Error Messages
 #Clean code, deallocate everything at the end, do not browse the list up-and-down for no use (O(n) complexity)
 #Light Memory Footprint (except for the Termcap part), little dynamic memory allocation in the program
+#Minimum number of Syscalls (stored the values into the program data structures)
 
 **Known issues**
 

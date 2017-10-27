@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 17:44:49 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:11:28 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 12:25:17 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void	enterkey(t_select *env)
 	restore_term(env, false);
 	while (tmp)
 	{
-		if (T_FILE(tmp->content)->select == 1)
+		if (T_FILE(tmp->content)->select)
 		{
 			ft_putstr(T_FILE(tmp->content)->filename);
 			write(STDOUT_FILENO, " ", 1);
 		}
 		tmp = tmp->next;
 	}
+	write(STDOUT_FILENO, "\n", 1);
 	ft_lstdel(&env->files, ft_delvoid);
 	exit(EXIT_SUCCESS);
 }

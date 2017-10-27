@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:41:48 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:23:02 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,45 +36,45 @@
 ** Macros for managing lists creation and deletion
 */
 
-#define CREATE		1
-#define DELETE		0
+# define SELECTMODE	1
+# define FALSEMODE	0
 
 /*
 ** Escape sequences, except reverse-video and underline (implemented with termcaps)
 */
 
-#define RESET		"\e[0m"
-#define BOLD		"\e[1m"
-#define ITALIC		"\e[3m"
-#define STRIKETHROUGH	"\e[9m"
-#define BLACK		"\e[30m"
-#define RED		"\e[31m"
-#define GREEN		"\e[32m"
-#define YELLOW		"\e[33m"
-#define BLUE		"\e[34m"
-#define MAGENTA		"\e[35m"
-#define CYAN		"\e[36m"
-#define LIGHT_GRAY	"\e[37m"
-#define DEFAULT		"\e[39m"
-#define DARK_GRAY	"\e[90m"
-#define LIGHT_RED	"\e[91m"
-#define LIGHT_GREEN	"\e[92m"
-#define LIGHT_YELLOW	"\e[93m"
-#define LIGHT_BLUE	"\e[94m"
-#define LIGHT_MAGENTA	"\e[95m"
-#define LIGHT_CYAN	"\e[96m"
-#define WHITE		"\e[97m"
+# define RESET		"\e[0m"
+# define BOLD		"\e[1m"
+# define ITALIC		"\e[3m"
+# define STRIKETHROUGH	"\e[9m"
+# define BLACK		"\e[30m"
+# define RED		"\e[31m"
+# define GREEN		"\e[32m"
+# define YELLOW		"\e[33m"
+# define BLUE		"\e[34m"
+# define MAGENTA	"\e[35m"
+# define CYAN		"\e[36m"
+# define LIGHT_GRAY	"\e[37m"
+# define DEFAULT	"\e[39m"
+# define DARK_GRAY	"\e[90m"
+# define LIGHT_RED	"\e[91m"
+# define LIGHT_GREEN	"\e[92m"
+# define LIGHT_YELLOW	"\e[93m"
+# define LIGHT_BLUE	"\e[94m"
+# define LIGHT_MAGENTA	"\e[95m"
+# define LIGHT_CYAN	"\e[96m"
+# define WHITE		"\e[97m"
 
 /*
 ** Error strings
 */
 
-#define	NOINPUT_STR	"Usage: ft_select [--key] [--directory] [FILES]\n"
-#define	NOTERM_STR	"TERM environment variable not set.\n"
-#define	NOTERMDB_STR	"No database found for this terminal.\n"
-#define	NOATTR_STR	"Couldn't retrieve terminal attributes.\n"
-#define	NOWINDOW_STR	"Couldn't retrieve window attributes.\n"
-#define	SHITTYINPUT_STR	"The input sent is invalid, Use a filename instead\n"
+# define NOINPUT_STR	"Usage: ft_select [--key] [--directory] [FILES]\n"
+# define NOTERM_STR	"TERM environment variable not set.\n"
+# define NOTERMDB_STR	"No database found for this terminal.\n"
+# define NOATTR_STR	"Couldn't retrieve terminal attributes.\n"
+# define NOWINDOW_STR	"Couldn't retrieve window attributes.\n"
+# define SHITTYINPUT_STR "The input sent is invalid, Use a filename instead\n"
 
 enum	e_errcode
 {
@@ -90,10 +90,12 @@ enum	e_errcode
 
 typedef struct		s_file
 {
-	char		*filename;
+	char	*filename;
+	int	st_mode;
+	bool	match : 1;
 	bool	select : 1;
 	bool	cursor : 1;
-	bool	match : 1;
+	bool	exist : 1;
 }			t_file;
 
 /*
@@ -138,7 +140,6 @@ typedef struct		s_select
 	unsigned char	buf_index;
 	bool		color : 1;
 	bool		print_buf : 1;
-	bool		dirmode : 1;
 }			t_select;
 
 /*
@@ -146,14 +147,14 @@ typedef struct		s_select
 ** Easy cast into t_file *
 */
 
-#define FMF		(env->first_matched_file)
-#define CF		(env->cursor_file)
-#define MATCHED_FILES	(env->matched_files)
-#define MINCOL		(env->min_col)
-#define FBL		(env->filesbyline)
-#define MINLIN		(env->min_lines)
-#define BUFI		(env->buf_index)
-#define T_FILE(ptr)	((t_file *)ptr)
+# define FMF		(env->first_matched_file)
+# define CF		(env->cursor_file)
+# define MATCHED_FILES	(env->matched_files)
+# define MINCOL		(env->min_col)
+# define FBL		(env->filesbyline)
+# define MINLIN		(env->min_lines)
+# define BUFI		(env->buf_index)
+# define T_FILE(ptr)	((t_file *)ptr)
 
 void	ft_select(int ac, char **av);
 void	fatal_err(char errcode);
@@ -172,12 +173,13 @@ void	spacekey(t_select *env);
 void	enterkey(t_select *env);
 void	deletekey(t_select *env);
 void	selectallfiles(t_select *env, bool selectype);
-void	deletefalsefiles(t_select *env);
+void	deletefiles(t_select *env, bool mode);
 void	autofill_buffer(t_select *env);
 void	fill_buffer(char c, t_select *env);
 int	ft_putchar_stdin(int c);
 void	wrap_closedir(void *content, size_t len);
 t_list	*next_match_on(t_list *lst);
 void	reset_cf(t_select *env);
+int	remove_filename(char *str);
 
 #endif

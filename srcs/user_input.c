@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:25:55 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:14:04 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	user_input(char *buf, t_select *env)
 		autofill_buffer(env);
 	else if (*buf == '\177' && T_FILE(CF->content)->match)
 		deletekey(env);
-	else if (ft_isalnum(*buf) == true || *buf == '\\' || *buf == '.' || *buf == '/' || *buf == '!' || *buf == '_')
+	else if (ft_isalnum(*buf) == true || *buf == '\\' || *buf == '.' || *buf == '/' || *buf == '!' || *buf == '_' || *buf == '`')
 		fill_buffer(*buf, env);
 	else if (*buf == '#')
 		env->color = !(env->color);
@@ -37,8 +37,10 @@ void	user_input(char *buf, t_select *env)
 		selectallfiles(env, true);
 	else if (*buf == '-')
 		selectallfiles(env, false);
-	else if (*buf == '&' && env->dirmode == 0)
-		deletefalsefiles(env);
+	else if (*buf == '&')
+		deletefiles(env, FALSEMODE);
+	else if (*buf == '^')
+		deletefiles(env, SELECTMODE);
 	else if (*buf == '?')
 		env->print_buf = !env->print_buf;
 	else if (*buf == '\033')

@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/26 13:39:57 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 11:11:30 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 18:55:08 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,29 @@ void	reset_cf(t_select *env)
 	else
 		CF = env->files;
 	T_FILE(CF->content)->cursor = 1;
+}
+
+/*
+** Delete the lasts char of the string until it finds a slash character
+*/
+
+int	remove_filename(char *str)
+{
+	char	*tmp;
+	int	del_char;
+
+	tmp = str;
+	del_char = 0;
+	while (*tmp)
+		tmp++;
+	tmp--;
+	while (*tmp != '/')
+	{
+		del_char++;
+		*tmp = '\0';
+		if (tmp == str)
+			break ;
+		tmp--;
+	}
+	return (del_char);
 }

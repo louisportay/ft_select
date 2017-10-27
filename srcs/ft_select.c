@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:45:10 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:12:45 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	setenv_select(t_select *env)
 	CF = env->files;
 	FMF = env->files;
 	ft_bzero(env->buf, 256);
-	env->buf_index = 0;
+	BUFI = 0;
 	MATCHED_FILES = ft_lstcount(env->files);
 	env->color = true;
 	env->print_buf = false;

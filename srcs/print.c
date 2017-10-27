@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:17:22 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:06:48 by lportay          ###   ########.fr       */
 /*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -18,59 +18,61 @@
 ** color escape sequence
 */
 
-void	check_extension(char *filename)
+static void	print_colors(t_file *file)
 {
 	char *tmp;
 
-	if ((tmp = ft_strstr(filename, ".c")) && (*(tmp + 2) == '\0'))
-		ft_putstr(BLUE);
-	if ((tmp = ft_strstr(filename, ".o")) && (*(tmp + 2) == '\0'))
-		ft_putstr(CYAN);
-	else if ((tmp = ft_strstr(filename, ".h")) && (*(tmp + 2) == '\0'))
-		ft_putstr(DARK_GRAY);
-	else if ((tmp = ft_strstr(filename, ".out")) && (*(tmp + 4) == '\0'))
-		ft_putstr(RED);
-	else if ((tmp = ft_strstr(filename, ".py")) && (*(tmp + 3) == '\0'))
-		ft_putstr(LIGHT_GREEN);
-	else if ((tmp = ft_strstr(filename, ".php")) && (*(tmp + 4) == '\0'))
-		ft_putstr(YELLOW);
-	else if ((tmp = ft_strstr(filename, ".cpp")) && (*(tmp + 4) == '\0'))
-		ft_putstr(LIGHT_MAGENTA);
-	else if ((tmp = ft_strstr(filename, ".rb")) && (*(tmp + 3) == '\0'))
-		ft_putstr(LIGHT_RED);
+	if (S_ISDIR(file->st_mode))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_BLUE);
+	else if (S_ISCHR(file->st_mode) || S_ISBLK(file->st_mode))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_YELLOW);
+	else if (S_ISLNK(file->st_mode))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_CYAN);
+	else if ((tmp = ft_strstr(file->filename, ".c")) && (*(tmp + 2) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, BLUE);
+	else if ((tmp = ft_strstr(file->filename, ".o")) && (*(tmp + 2) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, CYAN);
+	else if ((tmp = ft_strstr(file->filename, ".h")) && (*(tmp + 2) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, DARK_GRAY);
+	else if ((tmp = ft_strstr(file->filename, ".out")) && (*(tmp + 4) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, RED);
+	else if ((tmp = ft_strstr(file->filename, ".py")) && (*(tmp + 3) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_GREEN);
+	else if ((tmp = ft_strstr(file->filename, ".php")) && (*(tmp + 4) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, YELLOW);
+	else if ((tmp = ft_strstr(file->filename, ".cpp")) && (*(tmp + 4) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_MAGENTA);
+	else if ((tmp = ft_strstr(file->filename, ".rb")) && (*(tmp + 3) == '\0'))
+		ft_putstr_fd(STDIN_FILENO, LIGHT_RED);
 }
 
 /*
-** This could be done with escape sequences as well, but it's a termcaps project
 ** Activate underline and/or reverse video printing and/or colors
+**
+** Underline and reverse-video mode could be done with escape sequences as well,
+** But it's a termcaps project infortunately...
 */
 
 static void	activate_print_options(t_file *file, t_select *env)
 {
-	struct stat buf;
+	static char *mr = NULL;
+	static char *us = NULL;
 
 	if (env->color == true)
 	{
-		if (env->dirmode == 1 || access(file->filename, F_OK) == 0)
-		{
-			buf.st_mode = 0;
-			lstat(file->filename, &buf);
-			if (S_ISDIR(buf.st_mode))
-				ft_putstr(LIGHT_BLUE);
-			else if (S_ISCHR(buf.st_mode) || S_ISBLK(buf.st_mode))
-				ft_putstr(LIGHT_YELLOW);
-			else if (S_ISLNK(buf.st_mode))
-				ft_putstr(LIGHT_CYAN);
-			else
-				check_extension(file->filename);
-		}
+		if (file->exist)
+			print_colors(file);
 		else
-			ft_putstr(ITALIC);
+			ft_putstr_fd(STDIN_FILENO, ITALIC);
 	}
+	if (mr == NULL)
+		mr = tgetstr("mr", NULL);
+	if (us == NULL)
+		us = tgetstr("us", NULL);
 	if (file->select & 1)
-		tputs(tgetstr("mr", NULL), 1, ft_putchar_stdin);
+		tputs(mr, 1, ft_putchar_stdin);
 	if (file->cursor & 1)
-		tputs(tgetstr("us", NULL), 1, ft_putchar_stdin);
+		tputs(us, 1, ft_putchar_stdin);
 }
 
 /*
@@ -79,11 +81,18 @@ static void	activate_print_options(t_file *file, t_select *env)
 
 static void	deactivate_print_options(t_file *file)
 {
-	ft_putstr(RESET);
+	static char *me = NULL;
+	static char *ue = NULL;
+
+	if (me == NULL)
+		me = tgetstr("me", NULL);
+	if (ue == NULL)
+		ue = tgetstr("ue", NULL);
+	ft_putstr_fd(STDIN_FILENO, RESET);
 	if (file->select & 1)
-		tputs(tgetstr("me", NULL), 1, ft_putchar_stdin);
+		tputs(me, 1, ft_putchar_stdin);
 	if (file->cursor & 1)
-		tputs(tgetstr("ue", NULL), 1, ft_putchar_stdin);
+		tputs(ue, 1, ft_putchar_stdin);
 }
 
 /*

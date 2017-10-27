@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 19:30:15 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:00:40 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/27 21:23:30 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,23 @@ void	selectallfiles(t_select *env, bool selectype)
 }
 
 /*
-** Remove from the list the files that are matched and doesn't exist
+** Remove from the list the matched files and that doesn't exist (FALSEMODE)
+**
+** OR
+**
+** Remove from the list the files that are matched and selected (SELECTMODE)
 */
 
-void	deletefalsefiles(t_select *env)
+void	deletefiles(t_select *env, bool mode)
 {
 	t_list *tmp;
 
 	tmp = env->files;
 	while (tmp)
 	{
-		if (access(T_FILE(tmp->content)->filename, F_OK) == -1 && T_FILE(tmp->content)->match)
+		if (((mode == FALSEMODE && T_FILE(tmp->content)->exist == 0) ||
+			(mode == SELECTMODE && T_FILE(tmp->content)->select)) &&
+			T_FILE(tmp->content)->match)
 		{
 			if (tmp == FMF)	
 				FMF = next_match_on(FMF);
