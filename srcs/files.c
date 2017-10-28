@@ -35,10 +35,10 @@ static t_file	*new_file(char *filename, int access_ret, int st_mode)
 	return (new);
 }
 
-static	void	getdirentry(t_select *env, DIR *dirp, char *av)
+static void		getdirentry(t_select *env, DIR *dirp, char *av)
 {
-	char		fpath[512];
-	struct stat	buf;
+	char			fpath[512];
+	struct stat		buf;
 	struct dirent	*direntry;
 
 	buf.st_mode = 0;
@@ -47,14 +47,14 @@ static	void	getdirentry(t_select *env, DIR *dirp, char *av)
 		ft_strcat(fpath, "/");
 	ft_lstaddend(&env->dir, ft_lstnewaddr(dirp, sizeof(struct dirent *)));
 	direntry = readdir(dirp);
-
 	while (direntry)
 	{
 		if (ft_strncmp(direntry->d_name, ".", 1) != 0)
 		{
 			ft_strcat(fpath, direntry->d_name);
 			lstat(fpath, &buf);
-			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(direntry->d_name, 0, buf.st_mode), sizeof(t_file)));
+			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(direntry->d_name,
+							0, buf.st_mode), sizeof(t_file)));
 			remove_filename(fpath);
 			buf.st_mode = 0;
 		}
@@ -62,26 +62,27 @@ static	void	getdirentry(t_select *env, DIR *dirp, char *av)
 	}
 }
 
-static void	wrap_newfile(t_select *env, char *av)
+static void		wrap_newfile(t_select *env, char *av)
 {
 	struct stat	buf;
-	int 		ret;
+	int			ret;
 
 	if (ft_strlen(av) == 0)
 		return ;
 	buf.st_mode = 0;
 	if ((ret = access(av, F_OK)) == 0)
 		lstat(av, &buf);
-	ft_lstaddend(&env->files, ft_lstnewaddr(new_file(av, ret, buf.st_mode), sizeof(t_file)));
+	ft_lstaddend(&env->files, ft_lstnewaddr(new_file(av, ret, buf.st_mode),
+				sizeof(t_file)));
 }
 
 /*
 ** 'directory' option
 */
 
-static void	directory_fill(t_select *env, char **av)
+static void		directory_fill(t_select *env, char **av)
 {
-	DIR 		*dirp;
+	DIR	*dirp;
 
 	env->dir = ft_lstnew("HEAD", 5);
 	while (*av)
@@ -103,7 +104,7 @@ static void	directory_fill(t_select *env, char **av)
 ** Convert the av array in a list of "struct *files"
 */
 
-void	fill_lst(t_select *env, char **av)
+void			fill_lst(t_select *env, char **av)
 {
 	env->files = NULL;
 	env->dir = NULL;

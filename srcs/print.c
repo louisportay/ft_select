@@ -7,7 +7,6 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
 /*   Updated: 2017/10/27 23:42:21 by lportay          ###   ########.fr       */
-/*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +86,7 @@ static void	deactivate_print_options(t_select *env, t_file *file)
 
 static void	display(t_select *env)
 {
-	t_list		*tmp;
+	t_list			*tmp;
 	unsigned short	i;
 
 	tmp = env->files;
@@ -97,9 +96,10 @@ static void	display(t_select *env)
 		if (T_FILE(tmp->content)->match)
 		{
 			activate_print_options(env, T_FILE(tmp->content));
-				ft_putstr_fd(STDIN_FILENO, T_FILE(tmp->content)->filename);
+			ft_putstr_fd(STDIN_FILENO, T_FILE(tmp->content)->filename);
 			deactivate_print_options(env, T_FILE(tmp->content));
-			ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL - ft_strlen(T_FILE(tmp->content)->filename));
+			ft_putnchar_fd(STDIN_FILENO, ' ', MINCOL -
+					ft_strlen(T_FILE(tmp->content)->filename));
 			if ((++i % FBL) == 0)
 				write(STDIN_FILENO, "\n", 1);
 		}
@@ -114,7 +114,7 @@ static void	display(t_select *env)
 ** This function get called many times over the program's life
 */
 
-void	print_files(t_select *env)
+void		print_files(t_select *env)
 {
 	if (ft_lstcount(env->files) == 0)
 		wrap_exit(env, EXIT_SUCCESS);
@@ -129,5 +129,6 @@ void	print_files(t_select *env)
 			ft_printf("\033[%d;0H%s", env->ws.ws_row, env->buf);
 	}
 	else
-		ft_putstr_fd(STDIN_FILENO, BLUE"\'Too "WHITE"Small "RED"Window\'"RESET"©\n");
+		ft_putstr_fd(STDIN_FILENO, BLUE"\'Too "WHITE"Small "RED"Window\'"
+				RESET"©\n");
 }

@@ -37,7 +37,7 @@ static void	redraw_window(t_select *env)
 void		sig_switch(int signum, t_select *env)
 {
 	static t_select *envaddr = NULL;
-	
+
 	if (isthistheend(signum) == true)
 		restore_term(envaddr, true);
 	else if (signum == SIGWINCH)
@@ -47,7 +47,7 @@ void		sig_switch(int signum, t_select *env)
 		signal(SIGCONT, &sighandler);
 		restore_term(envaddr, false);
 	}
-	else if	(signum == SIGCONT)
+	else if (signum == SIGCONT)
 	{
 		signal(SIGTSTP, &sighandler);
 		select_term(envaddr);
@@ -59,7 +59,7 @@ void		sig_switch(int signum, t_select *env)
 		envaddr = env;
 }
 
-void	sighandler(int signum)
+void		sighandler(int signum)
 {
 	sig_switch(signum, NULL);
 }

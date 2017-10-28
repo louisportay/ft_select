@@ -32,6 +32,7 @@ static void	print_key(void)
 "'~' <==> Clear gradually the search buffer\n"
 "'?' <==> Print/Hide the search buffer\n");
 }
+
 /*
 ** Big switch to print the right error message
 */

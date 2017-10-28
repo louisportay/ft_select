@@ -13,7 +13,7 @@
 #include "libft.h"
 
 /*
-** Returns the address of the 'n' maillon 
+** Returns the address of the 'n' maillon
 ** return NULL if n negative
 */
 

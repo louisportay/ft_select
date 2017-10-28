@@ -13,8 +13,8 @@
 #include "libft.h"
 
 /*
-** Insert the character 'a' in the buffer 'buf', add 1 to i and print to the buffer
-** to 'fd' if it's full
+** Insert the character 'a' in the buffer 'buf', add 1 to i and print to the
+** buffer to 'fd' if it's full
 */
 
 void	putc_in_buf_fd(int fd, char a, char *buf, size_t *i)

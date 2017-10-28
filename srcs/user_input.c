@@ -13,13 +13,45 @@
 #include "ft_select.h"
 
 /*
+** Second part of user_input
+*/
+
+static void	esc(char *buf, t_select *env)
+{
+	if (*(buf + 1) == '\0')
+		wrap_exit(env, EXIT_SUCCESS);
+	else if (*(buf + 1) == '[')
+	{
+		if (*(buf + 2) == 'A')
+			move_cursor(-FBL, env);
+		else if (*(buf + 2) == 'B')
+			move_cursor(FBL, env);
+		else if (*(buf + 2) == 'C')
+			move_cursor(1, env);
+		else if (*(buf + 2) == 'D')
+			move_cursor(-1, env);
+		else if (*(buf + 2) == '3' && *(buf + 3) == '~' &&
+				T_FILE(CF->content)->match)
+			deletekey(env);
+	}
+}
+
+static bool	isbufferchar(char c)
+{
+	if (ft_isalnum(c) == true || c == '\\' || c == '.' || c == '/' ||
+			c == '!' || c == '_' || c == '`')
+		return (true);
+	return (false);
+}
+
+/*
 ** Understand what user typed and call corresponding function
 **
 ** escape == '\033' == 27
 ** delete == '\177' == 127 == \033[3~
 */
 
-void	user_input(char *buf, t_select *env)
+void		user_input(char *buf, t_select *env)
 {
 	if (*buf == ' ' && T_FILE(CF->content)->match)
 		spacekey(env);
@@ -29,7 +61,7 @@ void	user_input(char *buf, t_select *env)
 		autofill_buffer(env);
 	else if (*buf == '\177' && T_FILE(CF->content)->match)
 		deletekey(env);
-	else if (ft_isalnum(*buf) == true || *buf == '\\' || *buf == '.' || *buf == '/' || *buf == '!' || *buf == '_' || *buf == '`')
+	else if (isbufferchar(*buf) == true)
 		fill_buffer(*buf, env);
 	else if (*buf == '#')
 		env->color = !(env->color);
@@ -44,21 +76,5 @@ void	user_input(char *buf, t_select *env)
 	else if (*buf == '?')
 		env->print_buf = !env->print_buf;
 	else if (*buf == '\033')
-	{
-		if (*(buf + 1) == '\0')
-			wrap_exit(env, EXIT_SUCCESS);
-		else if (*(buf + 1) == '[')
-		{
-			if (*(buf + 2) == 'A')
-				move_cursor(-FBL, env);
-			else if (*(buf + 2) == 'B')
-				move_cursor(FBL, env);
-			else if (*(buf + 2) == 'C')
-				move_cursor(1, env);
-			else if (*(buf + 2) == 'D')
-				move_cursor(-1, env);
-			else if (*(buf + 2) == '3' && *(buf + 3) == '~' && T_FILE(CF->content)->match)
-				deletekey(env);
-		}
-	}
+		esc(buf, env);
 }

@@ -16,7 +16,7 @@
 ** Return the index number of the cursor file (for every matched file before)
 */
 
-static int index_match(t_list *files, t_list *tmp)
+static int		index_match(t_list *files, t_list *tmp)
 {
 	int index;
 
@@ -32,7 +32,7 @@ static int index_match(t_list *files, t_list *tmp)
 	return (-1);
 }
 
-static t_list *addrmatchonly(t_list *files, int rank)
+static t_list	*addrmatchonly(t_list *files, int rank)
 {
 	while (files)
 	{
@@ -53,7 +53,8 @@ static t_list *addrmatchonly(t_list *files, int rank)
 ** A Complete finite state machine would have been easier to understand
 */
 
-static int	get_index(short movement, int index, int nb_files, t_select *env)
+static int		get_index(short movement, int index, int nb_files,
+		t_select *env)
 {
 	if (index + movement >= nb_files)
 	{
@@ -87,14 +88,16 @@ static int	get_index(short movement, int index, int nb_files, t_select *env)
 ** (more complex too)
 */
 
-void	move_cursor(short movement, t_select *env)
+void			move_cursor(short movement, t_select *env)
 {
 	if (!FMF)
 		return ;
 	T_FILE(CF->content)->cursor = 0;
 	if (*env->buf == '\0')
-		CF = ft_lstaddr(env->files, get_index(movement, ft_lstindex(env->files, CF), MATCHED_FILES, env));
+		CF = ft_lstaddr(env->files, get_index(movement,
+					ft_lstindex(env->files, CF), MATCHED_FILES, env));
 	else
-		CF = addrmatchonly(env->files, get_index(movement, index_match(env->files, CF), MATCHED_FILES, env));
+		CF = addrmatchonly(env->files, get_index(movement,
+					index_match(env->files, CF), MATCHED_FILES, env));
 	T_FILE(CF->content)->cursor = 1;
 }

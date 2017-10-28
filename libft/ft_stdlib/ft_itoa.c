@@ -14,8 +14,8 @@
 
 char	*ft_itoa(long n)
 {
-	int		i;
-	char		*s;
+	int				i;
+	char			*s;
 	unsigned int	m;
 
 	i = ft_lwidth(n);

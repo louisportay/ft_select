@@ -16,7 +16,7 @@
 ** Do what the name say it does (select or deselect all files)
 */
 
-void	selectallfiles(t_select *env, bool selectype)
+void		selectallfiles(t_select *env, bool selectype)
 {
 	t_list *tmp;
 
@@ -30,6 +30,18 @@ void	selectallfiles(t_select *env, bool selectype)
 }
 
 /*
+** Verify whether the file must be deleted or not
+*/
+
+static bool	to_delete(t_file *file, bool mode)
+{
+	if (((mode == FALSEMODE && file->exist == 0) || (mode == SELECTMODE &&
+		file->select)) && file->match)
+		return (true);
+	return (false);
+}
+
+/*
 ** Remove from the list the matched files and that doesn't exist (FALSEMODE)
 **
 ** OR
@@ -37,23 +49,22 @@ void	selectallfiles(t_select *env, bool selectype)
 ** Remove from the list the files that are matched and selected (SELECTMODE)
 */
 
-void	deletefiles(t_select *env, bool mode)
+void		deletefiles(t_select *env, bool mode)
 {
 	t_list *tmp;
 
 	tmp = env->files;
 	while (tmp)
 	{
-		if (((mode == FALSEMODE && T_FILE(tmp->content)->exist == 0) ||
-			(mode == SELECTMODE && T_FILE(tmp->content)->select)) &&
-			T_FILE(tmp->content)->match)
+		if (to_delete(T_FILE(tmp->content), mode) == true)
 		{
-			if (tmp == FMF)	
+			if (tmp == FMF)
 				FMF = next_match_on(FMF);
 			if (tmp == CF)
 				CF = NULL;
 			tmp = tmp->next;
-			ft_lstremove(&env->files, ft_lstindex(env->files, tmp) -1, ft_delvoid);
+			ft_lstremove(&env->files, ft_lstindex(env->files, tmp) - 1,
+					ft_delvoid);
 			MATCHED_FILES--;
 		}
 		else

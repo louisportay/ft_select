@@ -17,7 +17,7 @@
 ** Get called by dynamic search
 */
 
-static void 	set_match(t_select *env)
+static void	set_match(t_select *env)
 {
 	t_list	*tmp;
 	bool	first;
@@ -28,7 +28,8 @@ static void 	set_match(t_select *env)
 	MATCHED_FILES = 0;
 	while (tmp)
 	{
-		if (ft_strncmp(T_FILE(tmp->content)->filename, env->buf, ft_strlen(env->buf)) == 0)
+		if (ft_strncmp(T_FILE(tmp->content)->filename, env->buf,
+					ft_strlen(env->buf)) == 0)
 		{
 			if (first == true)
 			{
@@ -47,7 +48,7 @@ static void 	set_match(t_select *env)
 /*
 ** Call set_match and refresh_window to set the environment to print only the
 ** files with the flag 'match' on (flag on by default)
-** 
+**
 ** Get called by fill_buffer and autofill_buffer
 */
 
@@ -70,7 +71,7 @@ static void	dynamic_search(t_select *env)
 ** whole buffer
 */
 
-void	fill_buffer(char c, t_select *env)
+void		fill_buffer(char c, t_select *env)
 {
 	if (c == '!')
 	{
@@ -85,21 +86,22 @@ void	fill_buffer(char c, t_select *env)
 			BUFI -= remove_filename(env->buf);
 	}
 	else if (c == '\\' && BUFI > 0)
-		env->buf [--BUFI] = '\0';
+		env->buf[--BUFI] = '\0';
 	else if (c != '\\' && c != '`' && BUFI < 255)
 		env->buf[BUFI++] = c;
 	dynamic_search(env);
 }
 
 /*
-** Fill the buffer with the cursor filename 
+** Fill the buffer with the cursor filename
 */
 
-void	autofill_buffer(t_select *env)
+void		autofill_buffer(t_select *env)
 {
 	if (ft_strncmp(T_FILE(CF->content)->filename, env->buf, BUFI) == 0)
 	{
-		while (T_FILE(CF->content)->filename[BUFI] != '\0' && T_FILE(CF->content)->filename[BUFI] != '/' && BUFI < 255)
+		while (T_FILE(CF->content)->filename[BUFI] != '\0' &&
+				T_FILE(CF->content)->filename[BUFI] != '/' && BUFI < 255)
 		{
 			env->buf[BUFI] = T_FILE(CF->content)->filename[BUFI];
 			BUFI++;

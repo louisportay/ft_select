@@ -40,7 +40,7 @@ static void	setenv_select(t_select *env)
 ** Tests whether all the system attributes are present to work properly
 */
 
-static char init(t_select *env, int ac, char **av)
+static char	init(t_select *env, int ac, char **av)
 {
 	char *tmp;
 
@@ -69,7 +69,7 @@ static char init(t_select *env, int ac, char **av)
 ** Main function for ft_select
 */
 
-void	ft_select(int ac, char **av)
+void		ft_select(int ac, char **av)
 {
 	t_select	env;
 	char		buf[4];

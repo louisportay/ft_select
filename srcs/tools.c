@@ -16,7 +16,7 @@
 ** function written for tputs to output the characters
 */
 
-int		ft_putchar_stdin(int c)
+int			ft_putchar_stdin(int c)
 {
 	write(STDIN_FILENO, &c, 1);
 	return (c);
@@ -54,7 +54,7 @@ t_list		*next_match_on(t_list *lst)
 ** Will set properly the cursor file
 */
 
-void	reset_cf(t_select *env)
+void		reset_cf(t_select *env)
 {
 	if (FMF)
 		CF = FMF;
@@ -67,10 +67,10 @@ void	reset_cf(t_select *env)
 ** Delete the lasts char of the string until it finds a slash character
 */
 
-int	remove_filename(char *str)
+int			remove_filename(char *str)
 {
 	char	*tmp;
-	int	del_char;
+	int		del_char;
 
 	tmp = str;
 	del_char = 0;

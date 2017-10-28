@@ -40,43 +40,44 @@
 # define FALSEMODE	0
 
 /*
-** Escape sequences, except reverse-video and underline (implemented with termcaps)
+** Escape sequences, except reverse-video and underline
+** (implemented with termcaps)
 */
 
-# define RESET		"\e[0m"
-# define BOLD		"\e[1m"
-# define ITALIC		"\e[3m"
+# define RESET			"\e[0m"
+# define BOLD			"\e[1m"
+# define ITALIC			"\e[3m"
 # define STRIKETHROUGH	"\e[9m"
-# define BLACK		"\e[30m"
-# define RED		"\e[31m"
-# define GREEN		"\e[32m"
-# define YELLOW		"\e[33m"
-# define BLUE		"\e[34m"
-# define MAGENTA	"\e[35m"
-# define CYAN		"\e[36m"
-# define LIGHT_GRAY	"\e[37m"
-# define DEFAULT	"\e[39m"
-# define DARK_GRAY	"\e[90m"
-# define LIGHT_RED	"\e[91m"
+# define BLACK			"\e[30m"
+# define RED			"\e[31m"
+# define GREEN			"\e[32m"
+# define YELLOW			"\e[33m"
+# define BLUE			"\e[34m"
+# define MAGENTA		"\e[35m"
+# define CYAN			"\e[36m"
+# define LIGHT_GRAY		"\e[37m"
+# define DEFAULT		"\e[39m"
+# define DARK_GRAY		"\e[90m"
+# define LIGHT_RED		"\e[91m"
 # define LIGHT_GREEN	"\e[92m"
 # define LIGHT_YELLOW	"\e[93m"
-# define LIGHT_BLUE	"\e[94m"
+# define LIGHT_BLUE		"\e[94m"
 # define LIGHT_MAGENTA	"\e[95m"
-# define LIGHT_CYAN	"\e[96m"
-# define WHITE		"\e[97m"
+# define LIGHT_CYAN		"\e[96m"
+# define WHITE			"\e[97m"
 
 /*
 ** Error strings
 */
 
 # define NOINPUT_STR	"Usage: ft_select [--key] [--directory] [FILES]\n"
-# define NOTERM_STR	"TERM environment variable not set.\n"
+# define NOTERM_STR		"TERM environment variable not set.\n"
 # define NOTERMDB_STR	"No database found for this terminal.\n"
-# define NOATTR_STR	"Couldn't retrieve terminal attributes.\n"
+# define NOATTR_STR		"Couldn't retrieve terminal attributes.\n"
 # define NOWINDOW_STR	"Couldn't retrieve window attributes.\n"
 # define SHITTYINPUT_STR "The input sent is invalid, Use a filename instead\n"
 
-enum	e_errcode
+enum				e_errcode
 {
 	SUCCESS,
 	NOINPUT,
@@ -90,13 +91,13 @@ enum	e_errcode
 
 typedef struct		s_file
 {
-	char	*filename;
-	int	st_mode;
-	bool	match : 1;
-	bool	select : 1;
-	bool	cursor : 1;
-	bool	exist : 1;
-}			t_file;
+	char			*filename;
+	int				st_mode;
+	bool			match : 1;
+	bool			select : 1;
+	bool			cursor : 1;
+	bool			exist : 1;
+}					t_file;
 
 /*
 ** min_col  ==	la largeur minimum d'une colonne pour imprimer le nom de tous
@@ -125,26 +126,26 @@ typedef struct		s_file
 
 typedef struct		s_select
 {
-	char		buf[256];
+	char			buf[256];
 	struct termios	tios;
 	struct termios	oldtios;
 	struct winsize	ws;
-	t_list		*files;
-	t_list		*dir;
-	t_list		*first_matched_file;
-	t_list		*cursor_file;
-	char		*mr;
-	char		*us;
-	char		*me;
-	char		*ue;
+	t_list			*files;
+	t_list			*dir;
+	t_list			*first_matched_file;
+	t_list			*cursor_file;
+	char			*mr;
+	char			*us;
+	char			*me;
+	char			*ue;
 	unsigned short	matched_files;
 	unsigned short	min_col;
 	unsigned char	filesbyline;
 	unsigned char	min_lines;
 	unsigned char	buf_index;
-	bool		color : 1;
-	bool		print_buf : 1;
-}			t_select;
+	bool			color : 1;
+	bool			print_buf : 1;
+}					t_select;
 
 /*
 ** Fast access to env variables
@@ -160,30 +161,30 @@ typedef struct		s_select
 # define BUFI		(env->buf_index)
 # define T_FILE(ptr)	((t_file *)ptr)
 
-void	ft_select(int ac, char **av);
-void	fatal_err(char errcode);
-void	wrap_exit(t_select *env, int status);
-void	sig_switch(int signum, t_select *env);
-void	wrap_signal(void);
-void	sighandler(int signum);
-void	restore_term(t_select *env, bool del);
-void	select_term(t_select *env);
-void	fill_lst(t_select *env, char **av);
-void	print_files(t_select *env);
-void	refresh_window(t_select *env);
-void	user_input(char *buf, t_select *env);
-void	move_cursor(short movement, t_select *env);
-void	spacekey(t_select *env);
-void	enterkey(t_select *env);
-void	deletekey(t_select *env);
-void	selectallfiles(t_select *env, bool selectype);
-void	deletefiles(t_select *env, bool mode);
-void	autofill_buffer(t_select *env);
-void	fill_buffer(char c, t_select *env);
-int	ft_putchar_stdin(int c);
-void	wrap_closedir(void *content, size_t len);
-t_list	*next_match_on(t_list *lst);
-void	reset_cf(t_select *env);
-int	remove_filename(char *str);
+void				ft_select(int ac, char **av);
+void				fatal_err(char errcode);
+void				wrap_exit(t_select *env, int status);
+void				sig_switch(int signum, t_select *env);
+void				wrap_signal(void);
+void				sighandler(int signum);
+void				restore_term(t_select *env, bool del);
+void				select_term(t_select *env);
+void				fill_lst(t_select *env, char **av);
+void				print_files(t_select *env);
+void				refresh_window(t_select *env);
+void				user_input(char *buf, t_select *env);
+void				move_cursor(short movement, t_select *env);
+void				spacekey(t_select *env);
+void				enterkey(t_select *env);
+void				deletekey(t_select *env);
+void				selectallfiles(t_select *env, bool selectype);
+void				deletefiles(t_select *env, bool mode);
+void				autofill_buffer(t_select *env);
+void				fill_buffer(char c, t_select *env);
+int					ft_putchar_stdin(int c);
+void				wrap_closedir(void *content, size_t len);
+t_list				*next_match_on(t_list *lst);
+void				reset_cf(t_select *env);
+int					remove_filename(char *str);
 
 #endif

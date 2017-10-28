@@ -13,8 +13,8 @@
 #include "ft_select.h"
 
 /*
-** Get the width of the longest argument and round (add padding) to the superior multiple of 
-** MCW (Minimum Column Width)
+** Get the width of the longest argument and round (add padding) to the superior
+**multiple of MCW (Minimum Column Width)
 */
 
 static int	longest_arg(t_list *lst)
@@ -29,7 +29,7 @@ static int	longest_arg(t_list *lst)
 		{
 			len = ft_strlen(T_FILE(lst->content)->filename);
 			if (len >= col_w)
-				col_w = ((len % MCW) ? ((len / MCW) * MCW): len) + MCW;
+				col_w = ((len % MCW) ? ((len / MCW) * MCW) : len) + MCW;
 		}
 		lst = lst->next;
 	}
@@ -64,7 +64,7 @@ static int	min_lines(int n_files, int fbl)
 ** -Dynamic Search
 */
 
-void	refresh_window(t_select *env)
+void		refresh_window(t_select *env)
 {
 	MINCOL = longest_arg(env->files);
 	if ((FBL = max_files_on_a_line(env->ws.ws_col, MINCOL)) == 0)
