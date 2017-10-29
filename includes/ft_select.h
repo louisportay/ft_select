@@ -39,6 +39,9 @@
 # define SELECTMODE	1
 # define FALSEMODE	0
 
+# define DIRMODE 1
+# define NORMAL 0
+
 /*
 ** Escape sequences, except reverse-video and underline
 ** (implemented with termcaps)
@@ -131,7 +134,6 @@ typedef struct		s_select
 	struct termios	oldtios;
 	struct winsize	ws;
 	t_list			*files;
-	t_list			*dir;
 	t_list			*first_matched_file;
 	t_list			*cursor_file;
 	char			*mr;
@@ -145,6 +147,7 @@ typedef struct		s_select
 	unsigned char	buf_index;
 	bool			color : 1;
 	bool			print_buf : 1;
+	bool			dirmode : 1;
 }					t_select;
 
 /*
@@ -182,7 +185,7 @@ void				deletefiles(t_select *env, bool mode);
 void				autofill_buffer(t_select *env);
 void				fill_buffer(char c, t_select *env);
 int					ft_putchar_stdin(int c);
-void				wrap_closedir(void *content, size_t len);
+void				clean_dirmode(void *content, size_t len);
 t_list				*next_match_on(t_list *lst);
 void				reset_cf(t_select *env);
 int					remove_filename(char *str);

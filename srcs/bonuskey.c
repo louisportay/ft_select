@@ -63,8 +63,7 @@ void		deletefiles(t_select *env, bool mode)
 			if (tmp == CF)
 				CF = NULL;
 			tmp = tmp->next;
-			ft_lstremove(&env->files, ft_lstindex(env->files, tmp) - 1,
-					ft_delvoid);
+			ft_lstremove(&env->files, ft_lstindex(env->files, tmp) - 1, (env->dirmode == true) ? &clean_dirmode : &ft_delvoid);
 			MATCHED_FILES--;
 		}
 		else

@@ -50,7 +50,7 @@ void	enterkey(t_select *env)
 		tmp = tmp->next;
 	}
 	write(STDOUT_FILENO, "\n", 1);
-	ft_lstdel(&env->files, ft_delvoid);
+	ft_lstdel(&env->files, (env->dirmode == true) ? &clean_dirmode : &ft_delvoid);
 	exit(EXIT_SUCCESS);
 }
 
@@ -69,7 +69,7 @@ void	deletekey(t_select *env)
 		T_FILE(CF->content)->cursor = 1;
 	else
 		CF = NULL;
-	ft_lstremove(&env->files, ft_lstindex(env->files, tmp), ft_delvoid);
+	ft_lstremove(&env->files, ft_lstindex(env->files, tmp), (env->dirmode == true) ? &clean_dirmode : &ft_delvoid);
 	if (!env->files)
 		return ;
 	if (CF == NULL)

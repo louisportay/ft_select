@@ -23,18 +23,6 @@ int			ft_putchar_stdin(int c)
 }
 
 /*
-** Close the open file descriptor linked to open directories
-** Called by ft_lstdel in restore_term
-*/
-
-void		wrap_closedir(void *content, size_t len)
-{
-	(void)len;
-	closedir(content);
-	content = NULL;
-}
-
-/*
 ** Find the next file with flag 'match' on and return it, return NULL otherwise
 */
 
@@ -48,6 +36,18 @@ t_list		*next_match_on(t_list *lst)
 		lst = lst->next;
 	}
 	return (NULL);
+}
+
+/*
+** Erase the file allocated on DIRMODE
+*/
+
+void	clean_dirmode(void *content, size_t len)
+{
+	ft_strdel(&T_FILE(content)->filename);
+	ft_bzero(content, len);
+	free(content);
+	content = NULL;
 }
 
 /*

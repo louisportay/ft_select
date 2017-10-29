@@ -32,10 +32,7 @@ void	select_term(t_select *env)
 void	restore_term(t_select *env, bool del)
 {
 	if (del == true)
-	{
-		ft_lstdel(&env->files, &ft_delvoid);
-		ft_lstdel(&env->dir, &wrap_closedir);
-	}
+			ft_lstdel(&env->files, (env->dirmode == true) ? &clean_dirmode : &ft_delvoid);
 	tputs(tgetstr("te", NULL), 1, ft_putchar_stdin);
 	tputs(tgetstr("ve", NULL), 1, ft_putchar_stdin);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &env->oldtios);
