@@ -17,7 +17,8 @@
 ** 'match'a pointer to the filename is set as well
 */
 
-static t_file	*new_file(char *filename, int access_ret, int st_mode, bool mode)
+static t_file	*new_file(char *filename, int access_ret, int st_mode,
+		bool mode)
 {
 	t_file *new;
 
@@ -52,7 +53,8 @@ static void		getdirentry(t_select *env, DIR *dirp, char *av)
 		{
 			ft_strcat(fpath, direntry->d_name);
 			lstat(fpath, &buf);
-			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(direntry->d_name, 0, buf.st_mode, DIRMODE), sizeof(t_file)));
+			ft_lstaddend(&env->files, ft_lstnewaddr(new_file(direntry->d_name,
+							0, buf.st_mode, DIRMODE), sizeof(t_file)));
 			remove_filename(fpath);
 			buf.st_mode = 0;
 		}
@@ -71,7 +73,8 @@ static void		wrap_newfile(t_select *env, char *av, bool mode)
 	buf.st_mode = 0;
 	if ((ret = access(av, F_OK)) == 0)
 		lstat(av, &buf);
-	ft_lstaddend(&env->files, ft_lstnewaddr(new_file(av, ret, buf.st_mode, mode), sizeof(t_file)));
+	ft_lstaddend(&env->files, ft_lstnewaddr(new_file(av, ret, buf.st_mode, mode)
+				, sizeof(t_file)));
 }
 
 /*

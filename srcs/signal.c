@@ -54,7 +54,7 @@ void		sig_switch(int signum, t_select *env)
 		print_files(envaddr);
 	}
 	signal(signum, SIG_DFL);
-	kill(0, signum);//
+	kill(0, signum);
 	if (envaddr == NULL)
 		envaddr = env;
 }

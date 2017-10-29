@@ -42,7 +42,7 @@ t_list		*next_match_on(t_list *lst)
 ** Erase the file allocated on DIRMODE
 */
 
-void	clean_dirmode(void *content, size_t len)
+void		clean_dirmode(void *content, size_t len)
 {
 	ft_strdel(&T_FILE(content)->filename);
 	ft_bzero(content, len);
