@@ -89,7 +89,7 @@ static void	display(t_select *env)
 	t_list			*tmp;
 	unsigned short	i;
 
-	tmp = env->files;
+	tmp = FMF;
 	i = 0;
 	while (tmp != NULL)
 	{
