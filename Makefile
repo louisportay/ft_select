@@ -15,7 +15,7 @@ vpath %.c srcs/
 export $(DEBUG)
 
 CC= gcc-7 
-DEBUG=sanitize
+DEBUG=no
 OPT=LIB
 ARCH= $(shell uname)
 
