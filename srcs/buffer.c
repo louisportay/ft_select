@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 13:57:01 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 21:13:53 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/30 16:32:11 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	fill_buffer(char c, t_select *env)
 			BUFI -= remove_filename(env->buf);
 	}
 	else if (c == '\\' && BUFI > 0)
-		env->buf [--BUFI] = '\0';
+		env->buf[--BUFI] = '\0';
 	else if (c != '\\' && c != '`' && BUFI < 255)
 		env->buf[BUFI++] = c;
 	dynamic_search(env);

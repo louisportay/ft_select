@@ -6,7 +6,7 @@
 #    By: lportay <lportay@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/13 10:52:14 by lportay           #+#    #+#              #
-#    Updated: 2017/10/27 16:31:31 by lportay          ###   ########.fr        #
+#    Updated: 2017/10/30 16:24:18 by lportay          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ vpath %.c srcs/
 export $(DEBUG)
 
 CC= gcc-7 
-DEBUG=sanitize
+DEBUG=no
 OPT=LIB
 ARCH= $(shell uname)
 

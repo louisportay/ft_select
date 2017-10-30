@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 16:45:46 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 23:42:21 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/30 17:02:23 by lportay          ###   ########.fr       */
 /*   Updated: 2017/10/25 20:29:34 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -90,7 +90,7 @@ static void	display(t_select *env)
 	t_list		*tmp;
 	unsigned short	i;
 
-	tmp = env->files;
+	tmp = FMF;
 	i = 0;
 	while (tmp != NULL)
 	{
@@ -116,7 +116,7 @@ static void	display(t_select *env)
 
 void	print_files(t_select *env)
 {
-	if (ft_lstcount(env->files) == 0)
+	if (!env->files)
 		wrap_exit(env, EXIT_SUCCESS);
 	tputs(tgetstr("cl", NULL), 1, ft_putchar_stdin);
 	if (FBL != 0 && MINLIN < env->ws.ws_row)

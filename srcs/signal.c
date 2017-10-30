@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 18:25:18 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/26 20:21:27 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/30 16:58:22 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		sig_switch(int signum, t_select *env)
 		print_files(envaddr);
 	}
 	signal(signum, SIG_DFL);
-	kill(0, signum);//
+	kill(0, signum);
 	if (envaddr == NULL)
 		envaddr = env;
 }

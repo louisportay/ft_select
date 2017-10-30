@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 19:51:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/25 21:08:51 by lportay          ###   ########.fr       */
+/*   Updated: 2017/10/30 17:01:01 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	longest_arg(t_list *lst)
 		{
 			len = ft_strlen(T_FILE(lst->content)->filename);
 			if (len >= col_w)
-				col_w = ((len % MCW) ? ((len / MCW) * MCW): len) + MCW;
+				col_w = ((len % MCW) ? ((len / MCW) * MCW) : len) + MCW;
 		}
 		lst = lst->next;
 	}
