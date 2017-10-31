@@ -19,6 +19,12 @@
 * Minimum number of Syscalls (stored the values into the program data structures)
 * No global variables used (just one static for the signal handling part)
 
+**To do/improve**
+
+* Keep hidden files in the list, set their flag match to 0 by default and implement a key to hide/print them
+* Bufferize `ft_select` output
+* Do not redraw the screen every time (just a little part)
+
 **Known issues**
 
 * Screen flash when processing the list very quickly
