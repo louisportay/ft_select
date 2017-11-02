@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/11/02 09:40:56 by lportay          ###   ########.fr       */
+/*   Updated: 2017/11/02 18:35:18 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 static void	setenv_select(t_select *env)
 {
-	env->tios.c_lflag &= ~(ICANON);
-	env->tios.c_lflag &= ~(ECHO);
+	env->tios.c_lflag &= ~(ICANON | ECHO);
 	env->tios.c_cc[VMIN] &= 1;
 	env->tios.c_cc[VTIME] &= 0;
 	T_FILE(env->files->content)->cursor = 1;

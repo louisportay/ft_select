@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:32:05 by lportay           #+#    #+#             */
-/*   Updated: 2017/11/02 09:38:24 by lportay          ###   ########.fr       */
+/*   Updated: 2017/11/02 18:29:37 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	print_key(void)
 "[Aa-Zz] [0-9] [._/] <==> Activate the dynamic search buffer\n"
 "'\\' <==> Delete a character in the search buffer\n"
 "'!' <==> Clear the search buffer\n"
-"'~' <==> Clear gradually the search buffer\n"
+"'`' <==> Clear gradually the search buffer\n"
 "'?' <==> Print/Hide the search buffer\n");
 }
 /*
