@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 15:03:40 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 23:33:06 by lportay          ###   ########.fr       */
+/*   Updated: 2017/11/02 09:42:48 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@
 # define NOATTR_STR	"Couldn't retrieve terminal attributes.\n"
 # define NOWINDOW_STR	"Couldn't retrieve window attributes.\n"
 # define SHITTYINPUT_STR "The input sent is invalid, Use a filename instead\n"
+# define MISSINGCAPABILITY_STR "Termcap capability missing, exiting now\n"
 
 enum	e_errcode
 {
@@ -86,6 +87,7 @@ enum	e_errcode
 	NOWINDOW,
 	SHITTYINPUT,
 	KEY,
+	MISSINGCAPABILITY,
 };
 
 typedef struct		s_file

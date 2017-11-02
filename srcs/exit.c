@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:32:05 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 18:29:32 by lportay          ###   ########.fr       */
+/*   Updated: 2017/11/02 09:38:24 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	dump_err(char errcode)
 		ft_putstr(NOWINDOW_STR);
 	else if (errcode == SHITTYINPUT)
 		ft_putstr(SHITTYINPUT_STR);
+	else if (errcode == MISSINGCAPABILITY)
+		ft_putstr(MISSINGCAPABILITY_STR);
 	else if (errcode == KEY)
 		print_key();
 }
@@ -61,7 +63,7 @@ static void	dump_err(char errcode)
 void		fatal_err(char errcode)
 {
 	dump_err(errcode);
-	exit((int)errcode);
+	exit(EXIT_FAILURE);
 }
 
 /*

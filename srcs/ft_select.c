@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:54 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/27 23:38:34 by lportay          ###   ########.fr       */
+/*   Updated: 2017/11/02 09:40:56 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ static void	setenv_select(t_select *env)
 	env->tios.c_lflag &= ~(ECHO);
 	env->tios.c_cc[VMIN] &= 1;
 	env->tios.c_cc[VTIME] &= 0;
-	env->mr = tgetstr("mr", NULL);
-	env->us = tgetstr("us", NULL);
-	env->me = tgetstr("me", NULL);
-	env->ue = tgetstr("ue", NULL);
 	T_FILE(env->files->content)->cursor = 1;
 	CF = env->files;
 	FMF = env->files;
@@ -58,6 +54,11 @@ static char init(t_select *env, int ac, char **av)
 		return (NOATTR);
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &env->ws) == -1)
 		return (NOWINDOW);
+	if ((env->mr = tgetstr("mr", NULL)) == NULL ||
+	(env->us = tgetstr("us", NULL)) == NULL ||
+	(env->me = tgetstr("me", NULL)) == NULL ||
+	(env->ue = tgetstr("ue", NULL)) == NULL)
+		return (MISSINGCAPABILITY);
 	fill_lst(env, ++av);
 	if (!env->files)
 		return (SHITTYINPUT);
