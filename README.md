@@ -23,6 +23,7 @@
 
 * Keep hidden files in the list, set their flag match to 0 by default and implement a key to hide/print them
 * Bufferize `ft_select` output
+* Use termcap string for comparison with keys instead of harcoding it ? 
 * Do not redraw the screen every time (just a little part)
 * Create a page system when too small window
 
