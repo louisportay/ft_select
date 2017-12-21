@@ -21,13 +21,13 @@
 
 **To do/improve**
 
-* Keep hidden files in the list, set their flag match to 0 by default and implement a key to hide/print them
-* Bufferize `ft_select` output
+* Keep hidden (dot) files in the list, set their flag match to 0 by default and implement a key to hide/print them
+* Bufferize `ft_select` output to the screen
 * Use termcap string for comparison with keys instead of harcoding it ? 
-* Do not redraw the screen every time (just a little part)
+* Do not redraw the screen every time (just some part)
 * Create a page system when too small window
 
 **Known issues**
 
-* Screen flash when processing the list very quickly
-* Buffer get filled when processing too quickly the list with the trackpad or the mouse Button 3 (Set `c_cc.[VMIN]`, `c_cc[VTIME]` properly ?)
+* Screen flash when processing the list very quickly (Fix: redraw only one part of the screen)
+* Buffer get filled when processing too quickly the list with the trackpad or the mouse Button 3 (Fix: read only one character each time and fill the buffer)

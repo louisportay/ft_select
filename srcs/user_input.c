@@ -6,7 +6,7 @@
 /*   By: lportay <lportay@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 15:18:29 by lportay           #+#    #+#             */
-/*   Updated: 2017/10/30 17:00:07 by lportay          ###   ########.fr       */
+/*   Updated: 2017/12/21 15:47:33 by lportay          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	esc(char *buf, t_select *env)
 ** Understand what user typed and call corresponding function
 **
 ** escape == '\033' == 27
-** delete == '\177' == 127 == \033[3~
+** backspace == '\177' == 127
+** delete == \033[3~
 */
 
 void	user_input(char *buf, t_select *env)
